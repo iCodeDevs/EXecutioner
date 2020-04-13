@@ -1,1 +1,3 @@
-#Declare errors for different compilation and execution errors
+'''
+Declare errors for different compilation and execution errors
+'''

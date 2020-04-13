@@ -1,2 +1,3 @@
-#Load and hold the settings for compile,execute and evaluate steps
-import json
+'''
+Load and hold the settings for compile,execute and evaluate steps
+'''

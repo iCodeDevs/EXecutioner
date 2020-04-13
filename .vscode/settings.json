@@ -1,0 +1,17 @@
+{
+    "python.linting.enabled": true,
+    "python.languageServer": "None",
+    "python.testing.pytestEnabled": true,
+    "python.venvFolders": [
+        "venv"
+    ],
+    "python.testing.pytestArgs": [
+        "src"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.pythonPath": "venv\\Scripts\\python.exe",
+    "python.linting.pylintPath": ".\\venv\\Scripts\\pylint",
+    "python.linting.pylintUseMinimalCheckers": false,
+    "python.linting.pylintEnabled": true
+}
