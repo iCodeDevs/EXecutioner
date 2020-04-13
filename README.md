@@ -14,7 +14,7 @@ A python library to execute submitted code inside a Firejail sandbox.
 - Clone the repository.
 - make a virtual environment named 'venv' inside the repository. (Learn about [venv](https://docs.python.org/3/tutorial/venv.html))
     ```bash
-    python -m virtualenv venv
+    python -m venv venv
     ```
 - access the virtualenv
 - install python dev dependencies

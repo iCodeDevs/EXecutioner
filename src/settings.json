@@ -1,0 +1,10 @@
+{
+    "languages":{
+        "python3":{
+            "compileCommand":"python -m py_compile {0}",
+            "executeCommand":"python {0}",
+            "timeLimit":"10",
+            "spaceLimit":"512"
+        }
+    }
+}
