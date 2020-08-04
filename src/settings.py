@@ -35,3 +35,17 @@ def load_added_settings(file_obj):
     return combine_settings(SETTINGS, added_settings)
 
 SETTINGS = load_default_settings()
+
+# SETTINGS based utilities
+def get_language(file_location):
+    '''
+        Identify the language of a compiled file
+    '''
+    extension = file_location[file_location.rindex('.')+1:]
+    for language, lang_data in SETTINGS.get('languages', dict()).items():
+        if lang_data.get('compiledExtension', 0) == extension:
+            return language
+    return None
+
+def get_language_settings(language):
+    return SETTINGS['languages'][language]

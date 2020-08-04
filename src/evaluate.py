@@ -7,3 +7,6 @@ Input
 - expected output
 - etc (For others means of Input)
 '''
+
+class Evaluation():
+    pass
