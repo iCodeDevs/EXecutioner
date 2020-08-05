@@ -1,5 +1,7 @@
 # EXecutioner
 
+[![Build Status](https://travis-ci.com/iCodeDevs/EXecutioner.svg?branch=master)](https://travis-ci.com/iCodeDevs/EXecutioner)
+
 A python library to execute submitted code inside a Firejail sandbox.
 
 ## Notes

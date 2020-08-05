@@ -7,12 +7,6 @@ import subprocess
 import shlex
 import re
 
-def displayWorkspace(error):
-    print("Error:\n",error)
-    print('playground:')
-    for i in walk('playground'):
-        print("--",i)
-
 class NoSandBox(SandBox):
     supported_languages = [
         'python2',
@@ -20,7 +14,7 @@ class NoSandBox(SandBox):
         'C',
         'C++',
     ]
-    error_reg = re.compile('(?s)(?P<error>.*)real (?P<real>[0-9]*\.[0-9]*)')
+    error_reg = re.compile('(?s)(?P<error>.*)real (?P<real>[0-9]*[.][0-9]*)')
     def generate_compile_command(self,
                                 command,
                                 file_location,
@@ -85,7 +79,6 @@ class NoSandBox(SandBox):
         output,errors = process.stdout,process.stderr
         error,time = self.process_error(errors)
         if(len(error.strip())>0):
-            displayWorkspace(compile_command)
             raise CompilationError()
         compile_file_location = self.get_compiled_file(file_location, lang_settings)
         compiled_program = self.CompiledProgram(lang_settings,compile_file_location)
@@ -107,9 +100,7 @@ class NoSandBox(SandBox):
 
         error,time = self.process_error(errors)
         if(len(error.strip())>0):
-            displayWorkspace(errors)
             raise self.idError(error,time,int(lang_settings['timeLimit']))
-
         return output
     
     def delete(self, program):
