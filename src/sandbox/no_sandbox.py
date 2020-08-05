@@ -7,10 +7,8 @@ import subprocess
 import shlex
 import re
 
-def displayWorkspace(file_loc):
-    a = open(file_loc,'r')
-    print(a.read())
-    a.close()
+def displayWorkspace(error):
+    print("Error:\n",error)
     print('playground:')
     for i in walk('playground'):
         print("--",i)
@@ -109,7 +107,7 @@ class NoSandBox(SandBox):
 
         error,time = self.process_error(errors)
         if(len(error.strip())>0):
-            displayWorkspace(compiled_file_location)
+            displayWorkspace(error)
             raise self.idError(error,time,int(lang_settings['timeLimit']))
 
         return output
