@@ -1,5 +1,3 @@
-# to run in VM
-sudo: required
 os: linux
 dist: bionic
 language: python
