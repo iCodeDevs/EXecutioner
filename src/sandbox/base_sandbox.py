@@ -1,18 +1,17 @@
 '''
-Contain Sandbox classes for different types of sandboxes used
-TODO:
-    finish NoSandBox class
-        Figure out RE for time command output
+Base sandbox class
 '''
-from src import settings
-import re
-import subprocess
 
 class SandBox:
+
     '''SandBox base class'''
+
     class CompiledProgram:
-        ''' compiled program class '''
+
+        ''' compiled program class for file based sandboxing '''
+
         def __init__(self, lang_settings, compiled_file_location):
+            ''' initialize file location of compiled code '''
             self.lang_settings = lang_settings
             self.file_location = compiled_file_location
 

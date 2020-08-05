@@ -1,6 +1,5 @@
-'''
-Tests for NoSandBox sandbox
-'''
+'''Tests for NoSandBox sandbox'''
+
 from .sandbox_tester import SecureTestSandBox
 from .language_tester import PythonTestSandBox, CTestSandBox
 from src.sandbox.no_sandbox import NoSandBox

@@ -14,7 +14,6 @@ class Program:
         self.sandbox = sandbox
         self.compiled_program = None
         self.file_location = None
-        self.compile()
 
     def compile(self):
         if not self.compiled_program:

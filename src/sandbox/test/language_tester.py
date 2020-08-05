@@ -1,16 +1,19 @@
 from src.Program import Program
-from src.errors import CompilationError,RunTimeError,MemoryOutError,TimeOutError
+from src.errors import CompilationError,RunTimeError,TimeOutError
 from .sandbox_tester import BaseTestSandBox
 from .decorators import raises_error
 import pytest
 
 class PythonTestSandBox(BaseTestSandBox):
+
     ''' Tests for Python Language '''
+
     def test_python_success(self):
         code = '''print("hello world")'''
         expected_out = "hello world"
         inp = ""
         pgm = Program(code,'python3',self.sandbox)
+        pgm.compile()
         out = pgm.execute(inp)
         assert expected_out == out.strip()
 
@@ -19,11 +22,14 @@ class PythonTestSandBox(BaseTestSandBox):
         code = '''a = 1/0'''
         inp = ""
         pgm = Program(code,'python3',self.sandbox)
-        out = pgm.execute(inp)
+        pgm.compile()
+        pgm.execute(inp)
 
 
 class CTestSandBox(BaseTestSandBox):
+
     ''' Tests for C Language '''
+
     def test_c_success(self):
         code = '''
         #include<stdio.h>
@@ -35,6 +41,7 @@ class CTestSandBox(BaseTestSandBox):
         expected_out = "hello world"
         inp = ""
         pgm = Program(code,'C',self.sandbox)
+        pgm.compile()
         out = pgm.execute(inp)
         assert expected_out == out
 
@@ -52,6 +59,7 @@ class CTestSandBox(BaseTestSandBox):
         expected_out = "hello world"
         inp = "0"
         pgm = Program(code,'C',self.sandbox)
+        pgm.compile()
         out = pgm.execute(inp)
 
     @raises_error(CompilationError)
@@ -64,5 +72,5 @@ class CTestSandBox(BaseTestSandBox):
         }
         '''
         expected_out = "hello world"
-        inp = ""
-        Program(code,'C',self.sandbox)
+        pgm = Program(code,'C',self.sandbox)
+        pgm.compile()

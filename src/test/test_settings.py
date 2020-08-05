@@ -10,11 +10,11 @@ from pytest import raises
 import src
 
 class TestLoaders:
-    '''
-    Collection of tests to check the settings loaders
-    '''
+
+    '''Collection of tests to check the settings loaders'''
+
     def test_load_default_settings(self):
-        ''' Testing the load_default_settings function '''
+        '''Testing the load_default_settings function'''
         module_file = inspect.getfile(src)
         module_location = module_file[:module_file.rfind(os.path.sep)]
         settings_file = module_location+os.path.sep+"settings.json"
@@ -22,11 +22,10 @@ class TestLoaders:
         assert expected_output == src.settings.load_default_settings()
 
 class TestCombineSettings:
-    '''
-    Tests to check combine_settings
-    '''
+    '''Tests to check combine_settings'''
+
     def nested_dictionary_generator(self, depth):
-        ''' Nested dictionary generator '''
+        '''Nested dictionary generator'''
         main_dict = {}
         added_dict = {}
         expected = {}
@@ -51,14 +50,14 @@ class TestCombineSettings:
                 inner_expected = inner_expected['a']
 
     def test_nested_dictionary(self):
-        ''' test with nested dictionary to depth 10 including empty'''
+        '''test with nested dictionary to depth 10 including empty'''
         depth = 11
         testcases = self.nested_dictionary_generator(depth)
         for main_dict, added_dict, expected in testcases:
             assert expected == src.settings.combine_settings(main_dict, added_dict)
 
     def test_combination_dictionary(self):
-        ''' test combination of dictionaries '''
+        '''test combination of dictionaries'''
         main_dict = {
             'a':{
                 'b':2,
@@ -89,19 +88,19 @@ class TestCombineSettings:
         assert expected == src.settings.combine_settings(main_dict, added_dict)
 
     def test_empty_array(self):
-        ''' test with empty array '''
+        '''test with empty array'''
         inputs = ([], [])
         expected = []
         assert expected == src.settings.combine_settings(*inputs)
 
     def test_array_join(self):
-        ''' test array join '''
+        '''test array join'''
         inputs = ([1, 2], [3, 4])
         expected = [1, 2, 3, 4]
         assert expected == src.settings.combine_settings(*inputs)
 
     def test_array_dictionary(self):
-        ''' test combination of array and dictionary '''
+        '''test combination of array and dictionary'''
         main_dict = {
             'a':{
                 'b':2,
@@ -133,7 +132,7 @@ class TestCombineSettings:
         assert expected == src.settings.combine_settings(main_dict, added_dict)
 
     def test_incompatible_types(self):
-        ''' checking if incompatible type error is thrown '''
+        '''checking if incompatible type error is thrown'''
         with raises(Exception) as error:
             src.settings.combine_settings({}, [])
         assert str(error.value) == 'incompatible types'

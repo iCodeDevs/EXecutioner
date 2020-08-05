@@ -1,12 +1,13 @@
 from src.sandbox.no_sandbox import NoSandBox
 from os import path
+
 class FireJail(NoSandBox):
+
     '''FireJail SandBox class'''
+
     supported_languages = [
-        'Python2',
         'Python3',
-        'C',
-        'C++'
+        'C'
     ]
     sandbox_command = 'time -p firejail --net=none --quiet --private={2} --rlimit-as={0}  --timeout=00:00:{1} '
     def generate_compile_command(self,

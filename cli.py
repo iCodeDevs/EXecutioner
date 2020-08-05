@@ -1,5 +1,5 @@
 #A CLI script to run the library
-from  src.sandbox.firejail import FireJail
+from  src.sandbox.no_sandbox import NoSandBox
 from src.Program import Program
 import re
 pgm = Program('''
@@ -10,6 +10,6 @@ int main(){
     scanf("%s",a);
     printf("hello %s",a);
 }
-''','C')
-
+''','C',NoSandBox())
+pgm.compile()
 print(pgm.execute('johnabraqw'))

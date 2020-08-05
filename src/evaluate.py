@@ -1,12 +1,6 @@
 '''
-Evaluate the output obtained to expected output and
-Execute other means of evaluation
-
-Input
-- output obtained
-- expected output
-- etc (For others means of Input)
+Evaluate the output of program with the expected output using various Metrices
 '''
 
-class Evaluation():
+class Evaluation:
     pass

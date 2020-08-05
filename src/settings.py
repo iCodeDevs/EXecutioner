@@ -7,7 +7,7 @@ import json
 SETTINGS = {}
 
 def combine_settings(main_settings, added_settings):
-    ''' combine 2 dict/list objects in depth '''
+    '''combine 2 dict/list objects in depth'''
     if not isinstance(added_settings, type(main_settings)):
         raise Exception("incompatible types")
     if isinstance(main_settings, dict):
@@ -23,14 +23,14 @@ def combine_settings(main_settings, added_settings):
 
 
 def load_default_settings():
-    ''' loads the default settings '''
+    '''loads the default settings'''
     file_loc = inspect.getfile(inspect.currentframe())
     module_folder = os.path.dirname(file_loc)
     settings_file = os.path.join(module_folder, "."+os.path.sep+"settings.json")
     return json.load(open(settings_file, 'r'))
 
 def load_added_settings(file_obj):
-    ''' load extra settings '''
+    '''load extra settings'''
     added_settings = json.load(file_obj)
     return combine_settings(SETTINGS, added_settings)
 
@@ -38,9 +38,7 @@ SETTINGS = load_default_settings()
 
 # SETTINGS based utilities
 def get_language(file_location):
-    '''
-        Identify the language of a compiled file
-    '''
+    '''Identify the language of a compiled file'''
     extension = file_location[file_location.rindex('.')+1:]
     for language, lang_data in SETTINGS.get('languages', dict()).items():
         if lang_data.get('compiledExtension', 0) == extension:

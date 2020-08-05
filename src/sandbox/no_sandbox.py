@@ -8,6 +8,9 @@ import shlex
 import re
 
 class NoSandBox(SandBox):
+
+    '''NoSandBox sandbox class'''
+
     supported_languages = [
         'python2',
         'python3',
