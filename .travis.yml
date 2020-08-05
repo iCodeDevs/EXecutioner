@@ -11,8 +11,10 @@ before_install:
   - sudo apt-get install gcc
   #install python
   - python3 --version
+  - sudo apt-get install python3-pip
 
 before_script:
+  - 
   - python3 -m pip install -r requirements.txt
 script:
   - pytest
