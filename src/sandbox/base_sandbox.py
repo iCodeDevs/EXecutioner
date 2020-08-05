@@ -20,7 +20,7 @@ class SandBox:
     def compile(self, program, **kwarg):
         '''compile Program and return compiledProgram'''
         raise NotImplementedError
-    
+
     def execute(self, compiledProgram, **kwargs):
         '''execute the compiledProgram'''
         raise NotImplementedError
