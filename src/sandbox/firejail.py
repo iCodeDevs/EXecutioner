@@ -8,7 +8,7 @@ class FireJail(NoSandBox):
         'C',
         'C++'
     ]
-    sandbox_command = 'time -p firejail --net=none --quiet --private --rlimit-as={0}  --timeout=00:00:{1} '
+    sandbox_command = 'time -p firejail --net=none --quiet --private=playground --rlimit-as={0}  --timeout=00:00:{1} '
     def generate_compile_command(self,
                                 command,
                                 file_location,
