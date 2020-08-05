@@ -1,0 +1,9 @@
+# to run in VM
+sudo: required
+os: linux
+language: python
+before_install:
+  #install firejail
+  - apt-get install firejail
+script:
+  - time firejail --quiet --timeout=00:00:10 python3 -c "while True: pass"
