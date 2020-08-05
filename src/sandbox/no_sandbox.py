@@ -105,11 +105,12 @@ class NoSandBox(SandBox):
     
     def delete(self, program):
         file_location = program.file_location
-        compiled_file_location =program.compiled_program.file_location
         if path.exists(file_location):
             unlink(file_location)
-        if path.exists(compiled_file_location):
-            unlink(compiled_file_location)
+        if(program.compiled_program):
+            compiled_file_location =program.compiled_program.file_location
+            if path.exists(compiled_file_location):
+                unlink(compiled_file_location)
 
 
         
