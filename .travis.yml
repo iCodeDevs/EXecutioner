@@ -3,6 +3,7 @@ sudo: required
 os: linux
 language: generic
 before_install:
+  - sudo apt install software-properties-common
   #install firejail
   - sudo add-apt-repository -y ppa:deki/firejail
   - sudo apt-get update
@@ -10,7 +11,9 @@ before_install:
   #install GCC
   - sudo apt-get install gcc
   #install python
-  - python3 --version
+  - sudo add-apt-repository -y ppa:deadsnakes/ppa
+  - sudo apt-get update
+  - sudo apt install python3.7
   - sudo apt-get install python3-pip
 
 before_script:
