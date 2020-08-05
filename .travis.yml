@@ -4,6 +4,8 @@ os: linux
 language: python
 before_install:
   #install firejail
+  - sudo add-apt-repository ppa:deki/firejail
+  - sudo apt-get update
   - sudo apt-get install firejail
 script:
   - "time firejail --quiet --timeout=00:00:10 python3 -c \"while True: pass\""
