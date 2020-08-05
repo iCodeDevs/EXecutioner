@@ -7,7 +7,10 @@ import subprocess
 import shlex
 import re
 
-def displayWorkspace():
+def displayWorkspace(file_loc):
+    a = open(file_loc,'r')
+    print(a.read())
+    a.close()
     print('playground:')
     for i in walk('playground'):
         print("--",i)
@@ -84,7 +87,7 @@ class NoSandBox(SandBox):
         output,errors = process.stdout,process.stderr
         error,time = self.process_error(errors)
         if(len(error.strip())>0):
-            displayWorkspace()
+            displayWorkspace(file_location)
             raise CompilationError()
         compile_file_location = self.get_compiled_file(file_location, lang_settings)
         compiled_program = self.CompiledProgram(lang_settings,compile_file_location)
@@ -106,7 +109,7 @@ class NoSandBox(SandBox):
 
         error,time = self.process_error(errors)
         if(len(error.strip())>0):
-            displayWorkspace()
+            displayWorkspace(compiled_file_location)
             raise self.idError(error,time,int(lang_settings['timeLimit']))
 
         return output
