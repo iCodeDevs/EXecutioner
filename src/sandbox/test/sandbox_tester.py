@@ -19,7 +19,7 @@ class SecureTestSandBox(BaseTestSandBox):
     '''
     Base Test file of all secure sandboxes
     '''
-
+    @raises_error(RunTimeError)
     def test_file_access(self):
         code = '''f = open('../a.txt','w')
 f.write("hello world")
