@@ -12,4 +12,5 @@ before_install:
   - sudo apt-get install gcc
 
 script:
+  - "time firejail --timeout:00:00:10 python3 -c \"print('hello world')\""
   - pytest
