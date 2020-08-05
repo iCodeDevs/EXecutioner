@@ -1,7 +1,7 @@
 '''SandBox base test classes'''
 
 from src.Program import Program
-from src.errors import CompilationError,RunTimeError,MemoryOutError,TimeOutError
+from src.errors import RunTimeError,MemoryOutError,TimeOutError
 from .decorators import raises_error
 from os import path
 

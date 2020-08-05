@@ -1,11 +1,11 @@
 from src.Program import Program
-from src.errors import CompilationError,RunTimeError,TimeOutError
+from src.errors import CompilationError,RunTimeError
 from .sandbox_tester import BaseTestSandBox
 from .decorators import raises_error
 
 class PythonTestSandBox(BaseTestSandBox):
 
-    ''' Tests for Python Language '''
+    '''Tests for Python Language'''
 
     def test_python_success(self):
         code = '''print("hello world")'''
@@ -27,7 +27,7 @@ class PythonTestSandBox(BaseTestSandBox):
 
 class CTestSandBox(BaseTestSandBox):
 
-    ''' Tests for C Language '''
+    '''Tests for C Language'''
 
     def test_c_success(self):
         code = '''
@@ -55,11 +55,10 @@ class CTestSandBox(BaseTestSandBox):
             return 0;
         }
         '''
-        expected_out = "hello world"
         inp = "0"
         pgm = Program(code,'C',self.sandbox)
         pgm.compile()
-        out = pgm.execute(inp)
+        pgm.execute(inp)
 
     @raises_error(CompilationError)
     def test_c_compilation_error(self):
@@ -70,6 +69,5 @@ class CTestSandBox(BaseTestSandBox):
             return 0;
         }
         '''
-        expected_out = "hello world"
         pgm = Program(code,'C',self.sandbox)
         pgm.compile()

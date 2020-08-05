@@ -1,6 +1,4 @@
-'''
-Base sandbox class
-'''
+'''Base sandbox class'''
 
 class SandBox:
 
@@ -8,10 +6,10 @@ class SandBox:
 
     class CompiledProgram:
 
-        ''' compiled program class for file based sandboxing '''
+        '''compiled program class for file based sandboxing'''
 
         def __init__(self, lang_settings, compiled_file_location):
-            ''' initialize file location of compiled code '''
+            '''initialize file location of compiled code'''
             self.lang_settings = lang_settings
             self.file_location = compiled_file_location
 
@@ -24,7 +22,7 @@ class SandBox:
         raise NotImplementedError
     
     def execute(self, compiledProgram, **kwargs):
-        ''' execute the compiledProgram '''
+        '''execute the compiledProgram'''
         raise NotImplementedError
 
     def delete(self, program, **kwargs):

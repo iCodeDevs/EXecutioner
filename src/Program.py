@@ -2,6 +2,9 @@ from src import settings
 from src.sandbox.firejail import FireJail
 
 class Program:
+
+    '''Represent a program instance'''
+
     def __init__(self, pgm_obj, language, sandbox = FireJail()):
         self.language = language
         if isinstance(pgm_obj,str):

@@ -22,6 +22,7 @@ class TestLoaders:
         assert expected_output == src.settings.load_default_settings()
 
 class TestCombineSettings:
+
     '''Tests to check combine_settings'''
 
     def nested_dictionary_generator(self, depth):
