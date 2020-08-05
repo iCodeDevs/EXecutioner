@@ -6,4 +6,4 @@ before_install:
   #install firejail
   - sudo apt-get install firejail
 script:
-  - time firejail --quiet --timeout=00:00:10 python3 -c "while True: pass"
+  - "time firejail --quiet --timeout=00:00:10 python3 -c \"while True: pass\""
