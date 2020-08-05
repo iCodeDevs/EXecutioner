@@ -85,7 +85,7 @@ class NoSandBox(SandBox):
         output,errors = process.stdout,process.stderr
         error,time = self.process_error(errors)
         if(len(error.strip())>0):
-            displayWorkspace(errors)
+            displayWorkspace(compile_command)
             raise CompilationError()
         compile_file_location = self.get_compiled_file(file_location, lang_settings)
         compiled_program = self.CompiledProgram(lang_settings,compile_file_location)
