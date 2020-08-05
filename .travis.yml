@@ -13,3 +13,12 @@ before_install:
 
 script:
   - pytest
+  - pydoctor --make-html --html-output=docs --add-package=src --project-name=EXecutioner
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  local_dir: docs
+  on:
+    branch: master
