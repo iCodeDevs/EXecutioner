@@ -1,7 +1,8 @@
 #A CLI script to run the library
 from  src.sandbox.no_sandbox import NoSandBox
 from src.Program import Program
-pgm = Program('''
+from src.evaluate import Evaluation, TestCase
+program = Program('''
 #include<stdio.h>
 #include<stdlib.h>
 int main(){
@@ -9,6 +10,11 @@ int main(){
     scanf("%s",a);
     printf("hello %s",a);
 }
-''','C',NoSandBox())
-pgm.compile()
-print(pgm.execute('johnabraqw'))
+''', 'C', NoSandBox())
+
+testcases = [TestCase("john", "hello john")]
+
+evaluator = Evaluation(program, testcases)
+evaluator.evaluate()
+
+print(testcases[0].scores)

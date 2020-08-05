@@ -1,13 +1,16 @@
 '''Declare errors for different compilation and execution errors'''
 
 class RunTimeError(Exception):
-    pass
+    '''represent runtime error of program'''
+
 
 class CompilationError(Exception):
-    pass
+    '''represent compilation error of program'''
+
 
 class MemoryOutError(Exception):
-    pass
+    '''represent memory error of program'''
+
 
 class TimeOutError(Exception):
-    pass
+    '''represent time out error of program'''

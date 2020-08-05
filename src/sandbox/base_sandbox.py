@@ -3,6 +3,7 @@
 class SandBox:
 
     '''SandBox base class'''
+    supported_languages = []
 
     class CompiledProgram:
 
@@ -21,9 +22,10 @@ class SandBox:
         '''compile Program and return compiledProgram'''
         raise NotImplementedError
 
-    def execute(self, compiledProgram, **kwargs):
+    def execute(self, compiled_program, test_input, **kwargs):
         '''execute the compiledProgram'''
         raise NotImplementedError
 
     def delete(self, program, **kwargs):
+        '''cleanup program related data from sandbox'''
         raise NotImplementedError

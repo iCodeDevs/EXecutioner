@@ -10,7 +10,7 @@
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.pythonPath": "venv/bin/python",
-    "python.linting.pylintPath": "./venv/Scripts/pylint",
+    "python.linting.pylintPath": "./venv/bin/pylint",
     "python.linting.pylintUseMinimalCheckers": false,
     "python.linting.pylintEnabled": true
 }

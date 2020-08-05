@@ -46,4 +46,5 @@ def get_language(file_location):
     return None
 
 def get_language_settings(language):
+    '''returns the settings for given language'''
     return SETTINGS['languages'][language]
