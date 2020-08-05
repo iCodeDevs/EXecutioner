@@ -21,4 +21,4 @@ before_script:
   - python3.7 -m pip install  setuptools
   - python3.7 -m pip install -r requirements.txt
 script:
-  - python3.7 -m pytest
+  - sudo python3.7 -m pytest
