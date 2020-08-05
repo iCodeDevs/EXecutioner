@@ -1,12 +1,12 @@
 from src import settings
 from src.sandbox.firejail import FireJail
-from os import path
+
 class Program:
     def __init__(self, pgm_obj, language, sandbox = FireJail()):
         self.language = language
         if isinstance(pgm_obj,str):
             self.code = pgm_obj
-        elif isinstance(pgm_obj,file):
+        elif hasattr(pgm_obj,'read'):
             self.code = pgm_obj.read()
             pgm_obj.close()
         
@@ -23,4 +23,5 @@ class Program:
         return self.sandbox.execute(self.compiled_program,inp)
     
     def __del__(self):
+        '''Delete history and files of program in sandbox instance'''
         self.sandbox.delete(self)

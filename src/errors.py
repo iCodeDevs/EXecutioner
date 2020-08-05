@@ -1,7 +1,4 @@
-'''
-Declare errors for different compilation and execution errors
-'''
-# Cannot Compile Error
+'''Declare errors for different compilation and execution errors'''
 
 class RunTimeError(Exception):
     pass

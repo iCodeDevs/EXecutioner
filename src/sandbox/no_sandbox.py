@@ -2,7 +2,7 @@ from src.sandbox.base_sandbox import SandBox
 from src.settings import SETTINGS
 from src.errors import TimeOutError,RunTimeError,MemoryOutError, CompilationError
 from uuid import uuid4
-from os import path,unlink,mkdir,walk
+from os import path,unlink,mkdir
 import subprocess
 import shlex
 import re
@@ -79,7 +79,7 @@ class NoSandBox(SandBox):
                             encoding='utf-8',
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
-        output,errors = process.stdout,process.stderr
+        _,errors = process.stdout,process.stderr
         error,time = self.process_error(errors)
         if(len(error.strip())>0):
             raise CompilationError()

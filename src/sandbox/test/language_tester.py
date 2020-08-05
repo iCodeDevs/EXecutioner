@@ -2,7 +2,6 @@ from src.Program import Program
 from src.errors import CompilationError,RunTimeError,TimeOutError
 from .sandbox_tester import BaseTestSandBox
 from .decorators import raises_error
-import pytest
 
 class PythonTestSandBox(BaseTestSandBox):
 
