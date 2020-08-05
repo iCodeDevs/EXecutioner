@@ -2,7 +2,7 @@ from src.sandbox.base_sandbox import SandBox
 from src.settings import SETTINGS
 from src.errors import TimeOutError,RunTimeError,MemoryOutError, CompilationError
 from uuid import uuid4
-from os import path,unlink
+from os import path,unlink,mkdir
 import subprocess
 import shlex
 import re
@@ -39,6 +39,8 @@ class NoSandBox(SandBox):
 
     def setupFile(self,program,lang_settings):
         workspace = SETTINGS.get('workspace','')
+        if(not path.exists(workspace)):
+            mkdir(workspace)
         file_name = lang_settings.get('fileFormat','{0}').format(uuid4())
         file_location = path.join(workspace,file_name)
         fileObj = open(file_location,'w')
