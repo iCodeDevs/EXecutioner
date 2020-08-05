@@ -3,6 +3,12 @@ from src.errors import CompilationError,RunTimeError,MemoryOutError,TimeOutError
 from .sandbox_tester import BaseTestSandBox
 from .decorators import raises_error
 import pytest
+import os
+
+def ls():
+    print('playground:')
+    for i in os.walk('playground'):
+        print("--",i)
 
 class PythonTestSandBox(BaseTestSandBox):
     ''' Tests for Python Language '''
