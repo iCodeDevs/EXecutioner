@@ -12,8 +12,9 @@ class FireJail(NoSandBox):
         'C'
     ]
     sandbox_command = 'time -p \
-                       firejail --net=none --quiet \
-                       --private={2} --rlimit-as={0}  --timeout=00:00:{1} '
+                    firejail --net=none --quiet \
+                    --private={2} --rlimit-as={0}  --timeout=00:00:{1} \
+                    '
 
     def generate_command(self, command, file_location, time_limit, mem_limit):
         '''generate the firejail cmd command'''

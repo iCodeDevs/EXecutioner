@@ -1,6 +1,6 @@
 '''represent a program'''
 
-from src import settings
+from src.settings import Settings
 from src.sandbox.firejail import FireJail
 
 class Program:
@@ -15,7 +15,7 @@ class Program:
             self.code = pgm_obj.read()
             pgm_obj.close()
 
-        self.settings = settings.get_language_settings(language)
+        self.settings = Settings.get_language_settings(language)
         self.sandbox = sandbox
         self.compiled_program = None
         self.file_location = None

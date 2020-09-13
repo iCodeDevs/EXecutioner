@@ -9,7 +9,7 @@ import subprocess
 import shlex
 import re
 from src.sandbox.base_sandbox import SandBox
-from src.settings import SETTINGS
+from src.settings import Settings
 from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError
 
 class NoSandBox(SandBox):
@@ -47,7 +47,7 @@ class NoSandBox(SandBox):
 
     def setup_file(self, program, lang_settings):
         '''set up the file in file system'''
-        workspace = SETTINGS.get('workspace', '')
+        workspace = Settings.get_workspace()
         if not path.exists(workspace):
             mkdir(workspace)
         file_name = lang_settings.get('fileFormat', '{0}').format(uuid4())
@@ -104,7 +104,8 @@ class NoSandBox(SandBox):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
         output, errors = process.stdout, process.stderr
-
+        print("output:",output)
+        print("err:",errors)
         error, time = self.process_error(errors)
         if len(error.strip()) > 0:
             raise self.id_error(error, time, int(lang_settings['timeLimit']))
