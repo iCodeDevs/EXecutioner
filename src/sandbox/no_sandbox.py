@@ -104,8 +104,8 @@ class NoSandBox(SandBox):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
         output, errors = process.stdout, process.stderr
-        print("output:",output)
-        print("err:",errors)
+        # print("output:",output)
+        # print("err:",errors)
         error, time = self.process_error(errors)
         if len(error.strip()) > 0:
             raise self.id_error(error, time, int(lang_settings['timeLimit']))

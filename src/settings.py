@@ -70,4 +70,9 @@ class Settings():
         '''returns the settings for given language'''
         return Settings.SETTINGS.get("workspace", ".")
 
+    @staticmethod
+    def get(key, alt=None):
+        '''returns the settings denoted by key'''
+        return Settings.SETTINGS.get(key, alt)
+
 Settings.load_default_settings()
