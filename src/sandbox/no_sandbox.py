@@ -14,7 +14,7 @@ from src.settings import Settings
 from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError
 
 if TYPE_CHECKING:
-    from src.program import Program, TestCase,CompiledProgram
+    from src.program import Program, TestCase, CompiledProgram
 
 
 class NoSandBox(SandBox):
@@ -97,7 +97,7 @@ class NoSandBox(SandBox):
         if len(error.strip()) > 0:
             raise CompilationError()
 
-        from src.program import CompiledProgram #
+        from src.program import CompiledProgram
 
         compile_file_location = self.get_compiled_file(
             file_location, lang_settings)
@@ -121,7 +121,8 @@ class NoSandBox(SandBox):
         output, errors = process.stdout, process.stderr
         error, time = self.process_error(errors)
         if len(error.strip()) > 0:
-            testcase.error = self.identify_error(error, time, int(lang_settings['timeLimit']))
+            testcase.error = self.identify_error(
+                error, time, int(lang_settings['timeLimit']))
         testcase.real_output = output
         testcase.time = time
 

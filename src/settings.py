@@ -28,7 +28,7 @@ def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:
 
     if form == 'yaml':
         import yaml
-        return lambda x: yaml.load(x, Loader=yaml.Loader)
+        return lambda x: yaml.safe_load(x)
     elif form == 'json':
         import json
         return json.load

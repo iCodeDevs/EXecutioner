@@ -18,6 +18,7 @@ class FireJail(NoSandBox):
                     --private={folder} --rlimit-as={mem_limit}  timeout {time_limit} \
                     {command}'
     '''The sandbox's command to be executed'''
+
     def generate_command(self, command, file_location, time_limit, mem_limit):
         '''generate the firejail cmd command'''
         parent_folder = path.dirname(file_location)

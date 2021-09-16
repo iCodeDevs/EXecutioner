@@ -5,7 +5,7 @@
 from src.sandbox.firejail import FireJail
 from src.program import Program
 from src.evaluate import Evaluation, TestCase
-program = Program('''
+PROGRAM = Program('''
 #include<stdio.h>
 #include<stdlib.h>
 int main(){
@@ -15,9 +15,9 @@ int main(){
 }
 ''', 'C', FireJail())
 
-testcases = [TestCase("john", "hello john")]
+TESTCASES = [TestCase("john", "hello john")]
 
-evaluator = Evaluation(program, testcases)
-evaluator.evaluate()
+EVALUATOR = Evaluation(PROGRAM, TESTCASES)
+EVALUATOR.evaluate()
 
-print(testcases[0].scores)
+print(TESTCASES[0].scores)
