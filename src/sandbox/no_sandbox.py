@@ -64,7 +64,7 @@ class NoSandBox(SandBox):
         program.file_location = file_location
         return file_location
 
-    def id_error(self, error: str, time, time_limit) -> RunTimeError:
+    def identify_error(self, error: str, time, time_limit) -> RunTimeError:
         '''identify the error'''
         if time > time_limit:
             return TimeOutError()
@@ -95,7 +95,7 @@ class NoSandBox(SandBox):
         if len(error.strip()) > 0:
             raise CompilationError()
 
-        from src.program import CompiledProgram
+        from src.program import CompiledProgram #
 
         compile_file_location = self.get_compiled_file(
             file_location, lang_settings)
@@ -117,11 +117,9 @@ class NoSandBox(SandBox):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
         output, errors = process.stdout, process.stderr
-        # print("output:",output)
-        # print("err:",errors)
         error, time = self.process_error(errors)
         if len(error.strip()) > 0:
-            testcase.error = self.id_error(error, time, int(lang_settings['timeLimit']))
+            testcase.error = self.identify_error(error, time, int(lang_settings['timeLimit']))
         testcase.real_output = output
         testcase.time = time
 

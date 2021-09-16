@@ -3,7 +3,7 @@ Load and hold the settings for compile,execute and evaluate steps
 '''
 import os
 import inspect
-import json
+from typing import Any, Callable, Union, IO
 from deepmerge import Merger
 
 SETTINGS_MERGER = Merger(
@@ -23,10 +23,26 @@ SETTINGS_MERGER = Merger(
 )
 
 
+def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:
+    '''Return load function for required format'''
+
+    if form == 'yaml':
+        import yaml
+        return lambda x: yaml.load(x,Loader=yaml.Loader)
+    elif form == 'json':
+        import json
+        return json.load
+    else:
+        raise Exception(message='does not exist')
+
+
 class Settings():
     """ Represent the settings"""
 
     SETTINGS = dict()
+
+    def __init__(self) -> None:
+        raise NotImplementedError
 
     @staticmethod
     def combine_settings(main_settings, added_settings):
@@ -39,16 +55,18 @@ class Settings():
     @staticmethod
     def load_default_settings():
         '''loads the default settings'''
+        loader = get_loader()
         file_loc = inspect.getfile(inspect.currentframe())
         module_folder = os.path.dirname(file_loc)
         settings_file = os.path.join(
-            module_folder, "."+os.path.sep+"settings.json")
-        Settings.SETTINGS = json.load(open(settings_file, 'r'))
+            module_folder, "."+os.path.sep+"settings.yaml")
+        Settings.SETTINGS = loader(open(settings_file, 'r'))
 
     @staticmethod
-    def load_added_settings(file_obj):
+    def load_added_settings(file_obj, form='yaml'):
         '''load extra settings'''
-        added_settings = json.load(file_obj)
+        loader = get_loader(form)
+        added_settings = loader(file_obj)
         Settings.SETTINGS = Settings.combine_settings(
             Settings.SETTINGS, added_settings)
 
