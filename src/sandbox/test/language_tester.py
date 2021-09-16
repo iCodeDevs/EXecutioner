@@ -20,13 +20,14 @@ class PythonTestSandBox(BaseTestSandBox):
         pgm.execute(testcase)
         assert testcase.real_output.strip() == testcase.output
 
-    @raises_error(RunTimeError)
     def test_python_error(self):
         '''test runtime error in python'''
         code = '''a = 1/0'''
         pgm = Program(code, 'python3', self.sandbox)
         pgm.compile()
-        pgm.execute(TestCase())
+        testcase = TestCase()
+        pgm.execute(testcase)
+        assert isinstance(testcase.error, RunTimeError)
 
 
 class CTestSandBox(BaseTestSandBox):
@@ -48,7 +49,6 @@ class CTestSandBox(BaseTestSandBox):
         pgm.execute(testcase)
         assert testcase.real_output.strip() == testcase.output
 
-    @raises_error(RunTimeError)
     def test_c_error(self):
         '''test runtime error in C'''
         code = '''
@@ -62,7 +62,9 @@ class CTestSandBox(BaseTestSandBox):
         '''
         pgm = Program(code, 'C', self.sandbox)
         pgm.compile()
-        pgm.execute(TestCase("0"))
+        testcase = TestCase("0")
+        pgm.execute(testcase)
+        assert isinstance(testcase.error, RunTimeError)
 
     @raises_error(CompilationError)
     def test_c_compilation_error(self):

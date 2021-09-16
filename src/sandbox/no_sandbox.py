@@ -64,7 +64,7 @@ class NoSandBox(SandBox):
         program.file_location = file_location
         return file_location
 
-    def id_error(self, error: str, time, time_limit):
+    def id_error(self, error: str, time, time_limit) -> RunTimeError:
         '''identify the error'''
         if time > time_limit:
             return TimeOutError()
@@ -121,7 +121,7 @@ class NoSandBox(SandBox):
         # print("err:",errors)
         error, time = self.process_error(errors)
         if len(error.strip()) > 0:
-            raise self.id_error(error, time, int(lang_settings['timeLimit']))
+            testcase.error = self.id_error(error, time, int(lang_settings['timeLimit']))
         testcase.real_output = output
         testcase.time = time
 

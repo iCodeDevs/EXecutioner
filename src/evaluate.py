@@ -1,7 +1,7 @@
 '''Evaluate the output of program with the expected output using various Metrices'''
 from typing import List, TYPE_CHECKING
 from src.metric.equal import Equal
-from src.errors import CompilationError
+from src.errors import CompilationError, RunTimeError
 
 if TYPE_CHECKING:
     from src.program import Program
@@ -48,7 +48,7 @@ class TestCase:
 
         self.real_output: str = ''
 
-        self.error = None
+        self.error: RunTimeError = None
         self.time: float = -1
         self.scores = dict()
 
