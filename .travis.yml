@@ -12,7 +12,7 @@ before_install:
   - sudo apt-get install gcc
 
 script:
-  - pytest
+  - pytest -n 4
   - pydoctor --make-html --html-output=docs --add-package=src --project-name=EXecutioner
 
 deploy:

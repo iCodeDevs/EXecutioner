@@ -3,7 +3,7 @@ Tests for settings module
 '''
 # pylint: disable=R0201,R0903
 
-import json
+import yaml
 import inspect
 import os
 import src
@@ -18,7 +18,8 @@ class TestLoaders:
         '''Testing the load_default_settings function'''
         module_file = inspect.getfile(src)
         module_location = module_file[:module_file.rfind(os.path.sep)]
-        settings_file = module_location+os.path.sep+"settings.json"
-        expected_output = json.load(open(settings_file, 'r'))
+        settings_file = module_location+os.path.sep+"settings.yaml"
+        expected_output = yaml.load(
+            open(settings_file, 'r'), Loader=yaml.Loader)
         Settings.load_default_settings()
         assert expected_output == Settings.SETTINGS

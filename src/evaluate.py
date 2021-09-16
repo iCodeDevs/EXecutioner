@@ -5,15 +5,21 @@ from src.errors import CompilationError, RunTimeError
 
 if TYPE_CHECKING:
     from src.program import Program
+    from src.metric.base import BaseMetrics
 
 
 class Evaluation:
     '''Evaluate the given program against Testcases and score with Metrics'''
 
-    def __init__(self, program, testcases, metrics=None):
+    def __init__(
+            self,
+            program: 'Program',
+            testcases: List['TestCase'],
+            metrics: List['BaseMetrics'] = None
+    ):
         self.program: 'Program' = program
-        self.testcases: List[TestCase] = testcases
-        self.metrics = metrics if metrics else [Equal()]
+        self.testcases: List['TestCase'] = testcases
+        self.metrics: List['BaseMetrics'] = metrics if metrics else [Equal()]
 
     def evaluate(self):
         '''Evaluate the program against testcases and return testcases with scores'''
