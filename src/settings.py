@@ -39,9 +39,10 @@ def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:
 class Settings():
     """ Represent the settings"""
 
-    SETTINGS = dict()
+    __SETTINGS = dict()
 
     def __init__(self) -> None:
+        '''Does not allow initialization'''
         raise NotImplementedError
 
     @staticmethod
@@ -60,22 +61,22 @@ class Settings():
         module_folder = os.path.dirname(file_loc)
         settings_file = os.path.join(
             module_folder, "."+os.path.sep+"settings.yaml")
-        Settings.SETTINGS = loader(open(settings_file, 'r'))
+        Settings.__SETTINGS = loader(open(settings_file, 'r'))
 
     @staticmethod
     def load_added_settings(file_obj, form='yaml'):
         '''load extra settings'''
         loader = get_loader(form)
         added_settings = loader(file_obj)
-        Settings.SETTINGS = Settings.combine_settings(
-            Settings.SETTINGS, added_settings)
+        Settings.__SETTINGS = Settings.combine_settings(
+            Settings.__SETTINGS, added_settings)
 
     # SETTINGS based utilities
     @staticmethod
     def get_language(file_location):
         '''Identify the language of a compiled file'''
         extension = file_location[file_location.rindex('.')+1:]
-        for language, lang_data in Settings.SETTINGS.get('languages', dict()).items():
+        for language, lang_data in Settings.__SETTINGS.get('languages', dict()).items():
             if lang_data.get('compiledExtension', 0) == extension:
                 return language
         return None
@@ -83,17 +84,17 @@ class Settings():
     @staticmethod
     def get_language_settings(language):
         '''returns the settings for given language'''
-        return Settings.SETTINGS['languages'][language]
+        return Settings.__SETTINGS['languages'][language]
 
     @staticmethod
     def get_workspace():
         '''returns the settings for given language'''
-        return Settings.SETTINGS.get("workspace", ".")
+        return Settings.__SETTINGS.get("workspace", ".")
 
     @staticmethod
     def get(key, alt=None):
         '''returns the settings denoted by key'''
-        return Settings.SETTINGS.get(key, alt)
+        return Settings.__SETTINGS.get(key, alt)
 
 
 Settings.load_default_settings()

@@ -12,11 +12,12 @@ class FireJail(NoSandBox):
         'Python3',
         'C'
     ]
+    '''The supported languages of this sandbox'''
     sandbox_command = 'time -p \
                     firejail --net=none --quiet \
                     --private={folder} --rlimit-as={mem_limit}  timeout {time_limit} \
-                    '
-
+                    {command}'
+    '''The sandbox's command to be executed'''
     def generate_command(self, command, file_location, time_limit, mem_limit):
         '''generate the firejail cmd command'''
         parent_folder = path.dirname(file_location)
@@ -25,12 +26,13 @@ class FireJail(NoSandBox):
         command = self.sandbox_command.format(
             mem_limit=mem_limit*1024*1024,
             time_limit=time_limit,
-            folder=parent_folder
-        ) + command
+            folder=parent_folder,
+            command=command,
+        )
         return command
 
-    # def generate_compile_command(self, command, file_location, _, time_limit, mem_limit):
-    #     return self.generate_command(command, file_location, time_limit, mem_limit)
+    def generate_compile_command(self, command, file_location, _, time_limit, mem_limit):
+        return self.generate_command(command, file_location, time_limit, mem_limit)
 
     def generate_execute_command(self, command, file_location, time_limit, mem_limit):
         return self.generate_command(command, file_location, time_limit, mem_limit)

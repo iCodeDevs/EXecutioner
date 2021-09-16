@@ -27,7 +27,9 @@ class NoSandBox(SandBox):
         'C',
         'C++',
     ]
+    '''List of supported languages by this sandbox'''
     error_reg = re.compile('(?s)(?P<error>.*)real (?P<real>[0-9]*[.][0-9]*)')
+    '''regular expression to extract error text and time'''
 
     def generate_compile_command(self, command, file_location, _, __, ___):
         '''generate command to compile program'''
@@ -123,7 +125,7 @@ class NoSandBox(SandBox):
         testcase.real_output = output
         testcase.time = time
 
-    def delete(self, program, **kwargs) -> None:
+    def delete(self, program: 'Program', **kwargs) -> None:
         file_location = program.file_location
         if path.exists(file_location):
             unlink(file_location)

@@ -1,5 +1,5 @@
 '''Evaluate the output of program with the expected output using various Metrices'''
-from typing import List, TYPE_CHECKING
+from typing import Dict, List, TYPE_CHECKING
 from src.metric.equal import Equal
 from src.errors import CompilationError, RunTimeError
 
@@ -17,9 +17,13 @@ class Evaluation:
             testcases: List['TestCase'],
             metrics: List['BaseMetrics'] = None
     ):
+        '''Create a new Evaluation object'''
         self.program: 'Program' = program
+        '''The program being evaluated'''
         self.testcases: List['TestCase'] = testcases
+        '''the list of testcase to execute the program on'''
         self.metrics: List['BaseMetrics'] = metrics if metrics else [Equal()]
+        '''The list of metrices to evaluate the program on'''
 
     def evaluate(self):
         '''Evaluate the program against testcases and return testcases with scores'''
@@ -49,14 +53,22 @@ class TestCase:
     '''Represent a testcase'''
 
     def __init__(self, testcase_input='', testcase_output=''):
+        '''Create a new testcase using given input and output'''
+
         self.input: str = testcase_input
+        ''' input for this testcase '''
         self.output: str = testcase_output
+        ''' expected output for this testcase '''
 
         self.real_output: str = ''
+        '''real output for this testcase after execution'''
 
         self.error: RunTimeError = None
+        '''error received after execution'''
         self.time: float = -1
-        self.scores = dict()
+        '''time taken to execute'''
+        self.scores: Dict[str, int] = dict()
+        '''The score Dictionary Object'''
 
     def set_error(self, error):
         '''set error while evaluation'''
