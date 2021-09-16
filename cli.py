@@ -1,6 +1,9 @@
-#A CLI script to run the library
-from  src.sandbox.no_sandbox import NoSandBox
-from src.Program import Program
+'''
+    A CLI script to run the library
+'''
+
+from src.sandbox.firejail import FireJail
+from src.program import Program
 from src.evaluate import Evaluation, TestCase
 program = Program('''
 #include<stdio.h>
@@ -10,7 +13,7 @@ int main(){
     scanf("%s",a);
     printf("hello %s",a);
 }
-''', 'C', NoSandBox())
+''', 'C', FireJail())
 
 testcases = [TestCase("john", "hello john")]
 

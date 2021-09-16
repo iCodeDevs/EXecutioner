@@ -1,4 +1,9 @@
 venv
 .pytest_cache
 __pycache__
-playground
+playground/*
+!playground/.gitkeep
+docs
+
+#for test runs
+trial.py

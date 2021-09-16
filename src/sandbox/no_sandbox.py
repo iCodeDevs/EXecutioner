@@ -8,9 +8,14 @@ from os import path, unlink, mkdir
 import subprocess
 import shlex
 import re
+from typing import TYPE_CHECKING
 from src.sandbox.base_sandbox import SandBox
 from src.settings import Settings
 from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError
+
+if TYPE_CHECKING:
+    from src.program import Program, TestCase,CompiledProgram
+
 
 class NoSandBox(SandBox):
 
@@ -26,19 +31,19 @@ class NoSandBox(SandBox):
 
     def generate_compile_command(self, command, file_location, _, __, ___):
         '''generate command to compile program'''
-        command = command.format(file_location)
+        command = command.format(source=file_location)
         command = '/usr/bin/time -p ' + command
         return command
 
     def generate_execute_command(self, command, file_location, time_limit, _):
         '''generate command to execute program'''
-        command = command.format(file_location)
+        command = command.format(compiled_file=file_location)
         command = '/usr/bin/time -p timeout {0} '.format(time_limit) + command
         return command
 
     def get_compiled_file(self, file_location, lang_settings):
         '''get the file location of compiled file'''
-        return lang_settings.get('compiledFormat', '{0}').format(file_location)
+        return lang_settings.get('compiledFormat', '{source}').format(source=file_location)
 
     def process_error(self, err_text):
         '''get error and real time taken'''
@@ -50,7 +55,8 @@ class NoSandBox(SandBox):
         workspace = Settings.get_workspace()
         if not path.exists(workspace):
             mkdir(workspace)
-        file_name = lang_settings.get('fileFormat', '{0}').format(uuid4())
+        file_name = lang_settings.get(
+            'fileFormat', '{filename}').format(filename=uuid4())
         file_location = path.join(workspace, file_name)
         file_obj = open(file_location, 'w')
         file_obj.write(program.code)
@@ -58,7 +64,7 @@ class NoSandBox(SandBox):
         program.file_location = file_location
         return file_location
 
-    def id_error(self, error: str, time, time_limit):
+    def identify_error(self, error: str, time, time_limit) -> RunTimeError:
         '''identify the error'''
         if time > time_limit:
             return TimeOutError()
@@ -66,7 +72,7 @@ class NoSandBox(SandBox):
             return MemoryOutError()
         return RunTimeError()
 
-    def compile(self, program, **_):
+    def compile(self, program: 'Program', **_) -> 'CompiledProgram':
         lang_settings = program.settings
         language = program.language
         file_location = self.setup_file(program, lang_settings)
@@ -88,11 +94,18 @@ class NoSandBox(SandBox):
         error, _ = self.process_error(errors)
         if len(error.strip()) > 0:
             raise CompilationError()
-        compile_file_location = self.get_compiled_file(file_location, lang_settings)
-        compiled_program = self.CompiledProgram(lang_settings, compile_file_location)
+
+        from src.program import CompiledProgram #
+
+        compile_file_location = self.get_compiled_file(
+            file_location, lang_settings)
+        compiled_program = CompiledProgram(
+            lang_settings, compile_file_location)
         return compiled_program
 
-    def execute(self, compiled_program, test_input='', **kwargs):
+    def execute(self, program: 'Program', testcase: 'TestCase', **kwargs) -> None:
+        compiled_program = program.compiled_program
+        test_input = testcase.input
         lang_settings = compiled_program.lang_settings
         compiled_file_location = compiled_program.file_location
         exe_command = self.generate_execute_command(lang_settings.get('executeCommand'),
@@ -104,14 +117,13 @@ class NoSandBox(SandBox):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
         output, errors = process.stdout, process.stderr
-        print("output:",output)
-        print("err:",errors)
         error, time = self.process_error(errors)
         if len(error.strip()) > 0:
-            raise self.id_error(error, time, int(lang_settings['timeLimit']))
-        return output
+            testcase.error = self.identify_error(error, time, int(lang_settings['timeLimit']))
+        testcase.real_output = output
+        testcase.time = time
 
-    def delete(self, program, **kwargs):
+    def delete(self, program, **kwargs) -> None:
         file_location = program.file_location
         if path.exists(file_location):
             unlink(file_location)
@@ -119,4 +131,3 @@ class NoSandBox(SandBox):
             compiled_file_location = program.compiled_program.file_location
             if path.exists(compiled_file_location):
                 unlink(compiled_file_location)
-        

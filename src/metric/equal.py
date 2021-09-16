@@ -2,6 +2,7 @@
 
 from .base import BaseMetrics
 
+
 class Equal(BaseMetrics):
     '''a 0/1 metric, gives full score if equal'''
 

@@ -2,6 +2,7 @@
 
 import pytest
 
+
 def raises_error(exception):
     '''pytest decorator to check if exception is raised in given function'''
     def inner(func):

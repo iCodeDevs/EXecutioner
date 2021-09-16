@@ -5,12 +5,13 @@
         "venv"
     ],
     "python.testing.pytestArgs": [
-        "src"
+        "src",
+        "-n 3"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.pythonPath": "venv/bin/python",
     "python.linting.pylintPath": "./venv/bin/pylint",
     "python.linting.pylintUseMinimalCheckers": false,
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
 }
