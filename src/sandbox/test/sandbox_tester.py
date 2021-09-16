@@ -1,15 +1,18 @@
 '''SandBox base test classes'''
 
 from os import path
+from src.evaluate import TestCase
 from src.program import Program
 from src.errors import RunTimeError, MemoryOutError, TimeOutError
 from .decorators import raises_error
+
 
 class BaseTestSandBox():
 
     '''Base Tests for all sandboxes'''
 
     sandbox = None
+
 
 class SecureTestSandBox(BaseTestSandBox):
 
@@ -24,7 +27,7 @@ f.close()
 '''
         pgm = Program(code, 'python3', self.sandbox)
         pgm.compile()
-        pgm.execute('')
+        pgm.execute(TestCase(''))
         file_path = path.join(path.dirname(pgm.file_location), '../a.txt')
         if path.exists(file_path):
             with open(file_path, 'r') as file_obj:
@@ -41,7 +44,7 @@ conn.request("HEAD", "/index.html")
 '''
         pgm = Program(code, 'python3', self.sandbox)
         pgm.compile()
-        pgm.execute('')
+        pgm.execute(TestCase(''))
 
     @raises_error(MemoryOutError)
     def test_memory_limit(self):
@@ -49,7 +52,7 @@ conn.request("HEAD", "/index.html")
         code = '''a = [i for i in range(1024*1024*1024)]'''
         pgm = Program(code, 'python3', self.sandbox)
         pgm.compile()
-        pgm.execute('')
+        pgm.execute(TestCase(''))
 
     @raises_error(TimeOutError)
     def test_runtime_limit(self):
@@ -58,4 +61,14 @@ conn.request("HEAD", "/index.html")
     pass'''
         pgm = Program(code, 'python3', self.sandbox)
         pgm.compile()
-        pgm.execute('')
+        pgm.execute(TestCase(''))
+
+    # def test_tight_runtime_limit(self):
+    #     '''
+    #         Test the runtime limit tightly
+
+    #         given a simple program with linear complexity for n,
+    #         say time taken to do 1000 steps = x seconds
+    #         number of steps needed to take 10 seconds => 10*(1000/x)
+    #     '''
+    #     pass

@@ -1,9 +1,11 @@
 '''Languagewise Test Classes'''
 
+from src.evaluate import TestCase
 from src.program import Program
 from src.errors import CompilationError, RunTimeError
 from .sandbox_tester import BaseTestSandBox
 from .decorators import raises_error
+
 
 class PythonTestSandBox(BaseTestSandBox):
 
@@ -16,7 +18,7 @@ class PythonTestSandBox(BaseTestSandBox):
         inp = ""
         pgm = Program(code, 'python3', self.sandbox)
         pgm.compile()
-        out = pgm.execute(inp)
+        out = pgm.execute(TestCase(inp))
         assert expected_out == out.strip()
 
     @raises_error(RunTimeError)
@@ -26,7 +28,7 @@ class PythonTestSandBox(BaseTestSandBox):
         inp = ""
         pgm = Program(code, 'python3', self.sandbox)
         pgm.compile()
-        pgm.execute(inp)
+        pgm.execute(TestCase(inp))
 
 
 class CTestSandBox(BaseTestSandBox):
@@ -46,7 +48,7 @@ class CTestSandBox(BaseTestSandBox):
         inp = ""
         pgm = Program(code, 'C', self.sandbox)
         pgm.compile()
-        out = pgm.execute(inp)
+        out = pgm.execute(TestCase(inp))
         assert expected_out == out
 
     @raises_error(RunTimeError)
@@ -64,7 +66,7 @@ class CTestSandBox(BaseTestSandBox):
         inp = "0"
         pgm = Program(code, 'C', self.sandbox)
         pgm.compile()
-        pgm.execute(inp)
+        pgm.execute(TestCase(inp))
 
     @raises_error(CompilationError)
     def test_c_compilation_error(self):

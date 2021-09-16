@@ -41,14 +41,16 @@ class Settings():
         '''loads the default settings'''
         file_loc = inspect.getfile(inspect.currentframe())
         module_folder = os.path.dirname(file_loc)
-        settings_file = os.path.join(module_folder, "."+os.path.sep+"settings.json")
+        settings_file = os.path.join(
+            module_folder, "."+os.path.sep+"settings.json")
         Settings.SETTINGS = json.load(open(settings_file, 'r'))
 
     @staticmethod
     def load_added_settings(file_obj):
         '''load extra settings'''
         added_settings = json.load(file_obj)
-        Settings.SETTINGS = Settings.combine_settings(Settings.SETTINGS, added_settings)
+        Settings.SETTINGS = Settings.combine_settings(
+            Settings.SETTINGS, added_settings)
 
     # SETTINGS based utilities
     @staticmethod
@@ -74,5 +76,6 @@ class Settings():
     def get(key, alt=None):
         '''returns the settings denoted by key'''
         return Settings.SETTINGS.get(key, alt)
+
 
 Settings.load_default_settings()

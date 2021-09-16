@@ -9,6 +9,7 @@ import os
 import src
 from src.settings import Settings
 
+
 class TestLoaders:
 
     '''Collection of tests to check the settings loaders'''

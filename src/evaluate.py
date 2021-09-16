@@ -1,12 +1,18 @@
 '''Evaluate the output of program with the expected output using various Metrices'''
+from typing import List, TYPE_CHECKING
 from src.metric.equal import Equal
 from src.errors import CompilationError
 
+if TYPE_CHECKING:
+    from src.program import Program
+
+
 class Evaluation:
     '''Evaluate the given program against Testcases and score with Metrics'''
+
     def __init__(self, program, testcases, metrics=None):
-        self.program = program
-        self.testcases = testcases
+        self.program: 'Program' = program
+        self.testcases: List[TestCase] = testcases
         self.metrics = metrics if metrics else [Equal()]
 
     def evaluate(self):
@@ -19,7 +25,7 @@ class Evaluation:
             return self.testcases
 
         for testcase in self.testcases:
-            recv_output = self.program.execute(testcase.input)
+            recv_output = self.program.execute(testcase)
             scores = self.get_scores(testcase.output, recv_output)
             testcase.set_scores(scores)
         return self.testcases
@@ -32,9 +38,11 @@ class Evaluation:
             score_dict[str(metric)] = score
         return score_dict
 
+
 class TestCase:
     '''Represent a testcase'''
-    def __init__(self, testcase_input, testcase_output):
+
+    def __init__(self, testcase_input, testcase_output=None):
         self.input = testcase_input
         self.output = testcase_output
         self.error = None

@@ -8,9 +8,14 @@ from os import path, unlink, mkdir
 import subprocess
 import shlex
 import re
+from typing import TYPE_CHECKING
 from src.sandbox.base_sandbox import SandBox
 from src.settings import Settings
 from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError
+
+if TYPE_CHECKING:
+    from src.program import Program, TestCase
+
 
 class NoSandBox(SandBox):
 
@@ -50,7 +55,8 @@ class NoSandBox(SandBox):
         workspace = Settings.get_workspace()
         if not path.exists(workspace):
             mkdir(workspace)
-        file_name = lang_settings.get('fileFormat', '{filename}').format(filename=uuid4())
+        file_name = lang_settings.get(
+            'fileFormat', '{filename}').format(filename=uuid4())
         file_location = path.join(workspace, file_name)
         file_obj = open(file_location, 'w')
         file_obj.write(program.code)
@@ -66,7 +72,7 @@ class NoSandBox(SandBox):
             return MemoryOutError()
         return RunTimeError()
 
-    def compile(self, program, **_):
+    def compile(self, program: 'Program', **_):
         lang_settings = program.settings
         language = program.language
         file_location = self.setup_file(program, lang_settings)
@@ -88,11 +94,18 @@ class NoSandBox(SandBox):
         error, _ = self.process_error(errors)
         if len(error.strip()) > 0:
             raise CompilationError()
-        compile_file_location = self.get_compiled_file(file_location, lang_settings)
-        compiled_program = self.CompiledProgram(lang_settings, compile_file_location)
+
+        from src.program import CompiledProgram
+
+        compile_file_location = self.get_compiled_file(
+            file_location, lang_settings)
+        compiled_program = CompiledProgram(
+            lang_settings, compile_file_location)
         return compiled_program
 
-    def execute(self, compiled_program, test_input='', **kwargs):
+    def execute(self, program: 'Program', testcase: 'TestCase', **kwargs):
+        compiled_program = program.compiled_program
+        test_input = testcase.input
         lang_settings = compiled_program.lang_settings
         compiled_file_location = compiled_program.file_location
         exe_command = self.generate_execute_command(lang_settings.get('executeCommand'),
@@ -119,4 +132,3 @@ class NoSandBox(SandBox):
             compiled_file_location = program.compiled_program.file_location
             if path.exists(compiled_file_location):
                 unlink(compiled_file_location)
-        

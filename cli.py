@@ -2,7 +2,7 @@
     A CLI script to run the library
 '''
 
-from  src.sandbox.firejail import FireJail
+from src.sandbox.firejail import FireJail
 from src.program import Program
 from src.evaluate import Evaluation, TestCase
 program = Program('''

@@ -3,6 +3,7 @@
 from os import path
 from src.sandbox.no_sandbox import NoSandBox
 
+
 class FireJail(NoSandBox):
 
     '''FireJail SandBox class'''
@@ -25,7 +26,7 @@ class FireJail(NoSandBox):
             mem_limit=mem_limit*1024*1024,
             time_limit=time_limit,
             folder=parent_folder
-                ) + command
+        ) + command
         return command
 
     # def generate_compile_command(self, command, file_location, _, time_limit, mem_limit):
