@@ -1,0 +1,24 @@
+name: Test
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+          architecture: "x64"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - run: sudo apt install software-properties-common
+      #install firejail
+      - run: sudo add-apt-repository -y ppa:deki/firejail
+      - run: sudo apt-get update
+      - run: sudo apt-get install firejail
+      #install GCC
+      - run: sudo apt-get install gcc
+
+      - run: pytest -n 4
