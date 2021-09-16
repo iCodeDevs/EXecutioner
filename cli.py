@@ -1,6 +1,9 @@
-#A CLI script to run the library
+'''
+    A CLI script to run the library
+'''
+
 from  src.sandbox.no_sandbox import NoSandBox
-from src.Program import Program
+from src.program import Program
 from src.evaluate import Evaluation, TestCase
 program = Program('''
 #include<stdio.h>
