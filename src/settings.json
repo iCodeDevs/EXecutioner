@@ -2,18 +2,18 @@
     "workspace":"playground",
     "languages":{
         "python3":{
-            "fileFormat":"{0}.py",
-            "compileCommand":"python3 -m py_compile {0}",
-            "executeCommand":"python3 '{0}'",
-            "compiledFormat":"{0}",
+            "fileFormat":"{filename}.py",
+            "compileCommand":"python3 -m py_compile {source}",
+            "executeCommand":"python3 '{compiled_file}'",
+            "compiledFormat":"{source}",
             "timeLimit":"10",
             "memLimit":"100"
         },
         "C":{
-            "fileFormat":"{0}.c",
-            "compileCommand":"gcc {0} -o {0}.out",
-            "executeCommand":"./{0}",
-            "compiledFormat":"{0}.out",
+            "fileFormat":"{filename}.c",
+            "compileCommand":"gcc {source} -o {source}.out",
+            "executeCommand":"./{compiled_file}",
+            "compiledFormat":"{source}.out",
             "timeLimit":"5",
             "memLimit":"100"
         }

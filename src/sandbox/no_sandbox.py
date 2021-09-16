@@ -26,19 +26,19 @@ class NoSandBox(SandBox):
 
     def generate_compile_command(self, command, file_location, _, __, ___):
         '''generate command to compile program'''
-        command = command.format(file_location)
+        command = command.format(source=file_location)
         command = '/usr/bin/time -p ' + command
         return command
 
     def generate_execute_command(self, command, file_location, time_limit, _):
         '''generate command to execute program'''
-        command = command.format(file_location)
+        command = command.format(compiled_file=file_location)
         command = '/usr/bin/time -p timeout {0} '.format(time_limit) + command
         return command
 
     def get_compiled_file(self, file_location, lang_settings):
         '''get the file location of compiled file'''
-        return lang_settings.get('compiledFormat', '{0}').format(file_location)
+        return lang_settings.get('compiledFormat', '{source}').format(source=file_location)
 
     def process_error(self, err_text):
         '''get error and real time taken'''
@@ -50,7 +50,7 @@ class NoSandBox(SandBox):
         workspace = Settings.get_workspace()
         if not path.exists(workspace):
             mkdir(workspace)
-        file_name = lang_settings.get('fileFormat', '{0}').format(uuid4())
+        file_name = lang_settings.get('fileFormat', '{filename}').format(filename=uuid4())
         file_location = path.join(workspace, file_name)
         file_obj = open(file_location, 'w')
         file_obj.write(program.code)
