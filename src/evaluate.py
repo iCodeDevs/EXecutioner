@@ -42,10 +42,14 @@ class Evaluation:
 class TestCase:
     '''Represent a testcase'''
 
-    def __init__(self, testcase_input, testcase_output=None):
-        self.input = testcase_input
-        self.output = testcase_output
+    def __init__(self, testcase_input='', testcase_output=''):
+        self.input: str = testcase_input
+        self.output: str = testcase_output
+
+        self.real_output: str = ''
+
         self.error = None
+        self.time: float = -1
         self.scores = dict()
 
     def set_error(self, error):

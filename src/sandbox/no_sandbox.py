@@ -14,7 +14,7 @@ from src.settings import Settings
 from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError
 
 if TYPE_CHECKING:
-    from src.program import Program, TestCase
+    from src.program import Program, TestCase,CompiledProgram
 
 
 class NoSandBox(SandBox):
@@ -72,7 +72,7 @@ class NoSandBox(SandBox):
             return MemoryOutError()
         return RunTimeError()
 
-    def compile(self, program: 'Program', **_):
+    def compile(self, program: 'Program', **_) -> 'CompiledProgram':
         lang_settings = program.settings
         language = program.language
         file_location = self.setup_file(program, lang_settings)
@@ -103,7 +103,7 @@ class NoSandBox(SandBox):
             lang_settings, compile_file_location)
         return compiled_program
 
-    def execute(self, program: 'Program', testcase: 'TestCase', **kwargs):
+    def execute(self, program: 'Program', testcase: 'TestCase', **kwargs) -> None:
         compiled_program = program.compiled_program
         test_input = testcase.input
         lang_settings = compiled_program.lang_settings
@@ -122,9 +122,10 @@ class NoSandBox(SandBox):
         error, time = self.process_error(errors)
         if len(error.strip()) > 0:
             raise self.id_error(error, time, int(lang_settings['timeLimit']))
-        return output
+        testcase.real_output = output
+        testcase.time = time
 
-    def delete(self, program, **kwargs):
+    def delete(self, program, **kwargs) -> None:
         file_location = program.file_location
         if path.exists(file_location):
             unlink(file_location)

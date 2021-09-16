@@ -14,21 +14,19 @@ class PythonTestSandBox(BaseTestSandBox):
     def test_python_success(self):
         '''test successful python code'''
         code = '''print("hello world")'''
-        expected_out = "hello world"
-        inp = ""
         pgm = Program(code, 'python3', self.sandbox)
         pgm.compile()
-        out = pgm.execute(TestCase(inp))
-        assert expected_out == out.strip()
+        testcase = TestCase(testcase_output="hello world")
+        pgm.execute(testcase)
+        assert testcase.real_output.strip() == testcase.output
 
     @raises_error(RunTimeError)
     def test_python_error(self):
         '''test runtime error in python'''
         code = '''a = 1/0'''
-        inp = ""
         pgm = Program(code, 'python3', self.sandbox)
         pgm.compile()
-        pgm.execute(TestCase(inp))
+        pgm.execute(TestCase())
 
 
 class CTestSandBox(BaseTestSandBox):
@@ -44,12 +42,11 @@ class CTestSandBox(BaseTestSandBox):
             return 0;
         }
         '''
-        expected_out = "hello world"
-        inp = ""
         pgm = Program(code, 'C', self.sandbox)
         pgm.compile()
-        out = pgm.execute(TestCase(inp))
-        assert expected_out == out
+        testcase = TestCase(testcase_output="hello world")
+        pgm.execute(testcase)
+        assert testcase.real_output.strip() == testcase.output
 
     @raises_error(RunTimeError)
     def test_c_error(self):
@@ -63,10 +60,9 @@ class CTestSandBox(BaseTestSandBox):
             return 0;
         }
         '''
-        inp = "0"
         pgm = Program(code, 'C', self.sandbox)
         pgm.compile()
-        pgm.execute(TestCase(inp))
+        pgm.execute(TestCase("0"))
 
     @raises_error(CompilationError)
     def test_c_compilation_error(self):
