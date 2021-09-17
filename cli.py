@@ -6,18 +6,13 @@ from src.sandbox.firejail import FireJail
 from src.program import Program
 from src.evaluate import Evaluation, TestCase
 PROGRAM = Program('''
-#include<stdio.h>
-#include<stdlib.h>
-int main(){
-    char a[10];
-    scanf("%s",a);
-    printf("hello %s",a);
-}
-''', 'C', FireJail())
+print("hello world")
+''', 'python3', FireJail())
 
-TESTCASES = [TestCase("john", "hello john")]
+TESTCASE = TestCase("hello world")
+PROGRAM.compile()
+PROGRAM.execute(TESTCASE)
 
-EVALUATOR = Evaluation(PROGRAM, TESTCASES)
-EVALUATOR.evaluate()
+print(TESTCASE.real_output)
 
-print(TESTCASES[0].scores)
+del PROGRAM

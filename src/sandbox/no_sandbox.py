@@ -11,7 +11,7 @@ import re
 from typing import TYPE_CHECKING, Union
 from src.sandbox.base_sandbox import SandBox
 from src.settings import Settings
-from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError
+from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError,NotCompiledError
 
 #pylint: disable=W0611,R0401
 if TYPE_CHECKING:
@@ -120,6 +120,9 @@ class NoSandBox(SandBox):
 
     def execute(self, program: 'Program', testcase: 'TestCase', **kwargs) -> None:
         compiled_program = program.compiled_program
+        if not compiled_program:
+            raise NotCompiledError()
+
         test_input = testcase.input
         lang_settings = compiled_program.lang_settings
         compiled_file_location = compiled_program.file_location
@@ -142,10 +145,10 @@ class NoSandBox(SandBox):
         testcase.time = max_time
 
     def delete(self, program: 'Program', **kwargs) -> None:
-        file_location = program.file_location
-        if path.exists(file_location):
-            unlink(file_location)
-        if program.compiled_program:
-            compiled_file_location = program.compiled_program.file_location
-            if path.exists(compiled_file_location):
-                unlink(compiled_file_location)
+        diposibles = program.settings.get('disposible')
+        for item in diposibles:
+            folder, file_name = path.split(program.file_location)
+            item = item.format(source_name=path.splitext(file_name)[0])
+            item = path.join(folder, item)
+            if path.exists(item):
+                unlink(item)
