@@ -15,11 +15,3 @@ class MemoryOutError(RunTimeError):
 
 class TimeOutError(RunTimeError):
     '''represent time out error of program'''
-
-
-class UnknownCompileCommandError(Exception):
-    '''Raised if the compile command is missing'''
-
-
-class NotCompiledError(Exception):
-    '''Raised if the Program is not compiled before execution'''

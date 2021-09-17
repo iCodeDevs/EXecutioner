@@ -14,8 +14,6 @@ from executioner.errors import (
     RunTimeError,
     MemoryOutError,
     CompilationError,
-    NotCompiledError,
-    UnknownCompileCommandError
 )
 
 #pylint: disable=W0611,R0401
@@ -100,8 +98,7 @@ class NoSandBox(SandBox):
         language = program.language
         self.setup_file(program, lang_settings)
         compile_command = lang_settings.get('compileCommand', None)
-        if not compile_command:
-            raise UnknownCompileCommandError()
+        assert compile_command, f"compile command for {0} is not found!".format(program.language)
 
         compile_command = self.generate_compile_command(compile_command,
                                                         self.file_location,
@@ -124,9 +121,7 @@ class NoSandBox(SandBox):
         self.compile_file_location = self.get_compiled_file(lang_settings)
 
     def execute(self, program: 'Program', testcase: 'TestCase', **kwargs) -> None:
-        if not self.compile_file_location:
-            raise NotCompiledError()
-
+        assert self.compile_file_location, f'program {0} not compiled'.format(program.uuid)
         test_input = testcase.input
         lang_settings = program.settings
         compiled_file_location = self.compile_file_location

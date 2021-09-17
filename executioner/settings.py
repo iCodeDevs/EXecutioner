@@ -31,9 +31,9 @@ def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:
     if form == 'yaml':
         return yaml.safe_load
     elif form == 'json':
-        return json.load
+        return json.loads
     else:
-        raise Exception(message='does not exist')
+        assert False, f"unknown format {0}".format(form)
 
 
 class Settings():
@@ -64,22 +64,22 @@ class Settings():
         Settings.__SETTINGS = loader(open(settings_file, 'r'))
 
     @staticmethod
-    def load_added_settings(file_obj, form='yaml'):
+    def load_added_settings(data: str, form='yaml'):
         '''load extra settings'''
         loader = get_loader(form)
-        added_settings = loader(file_obj)
+        added_settings = loader(data)
         Settings.__SETTINGS = Settings.combine_settings(
             Settings.__SETTINGS, added_settings)
 
     # SETTINGS based utilities
-    @staticmethod
-    def get_language(file_location):
-        '''Identify the language of a compiled file'''
-        extension = file_location[file_location.rindex('.')+1:]
-        for language, lang_data in Settings.__SETTINGS.get('languages', dict()).items():
-            if lang_data.get('compiledExtension', 0) == extension:
-                return language
-        return None
+    # @staticmethod
+    # def get_language(file_location):
+    #     '''Identify the language of a compiled file'''
+    #     extension = file_location[file_location.rindex('.')+1:]
+    #     for language, lang_data in Settings.__SETTINGS.get('languages', dict()).items():
+    #         if lang_data.get('compiledExtension', 0) == extension:
+    #             return language
+    #     return None
 
     @staticmethod
     def get_language_settings(language):
