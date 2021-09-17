@@ -33,7 +33,7 @@ def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:
     elif form == 'json':
         return json.loads
     else:
-        assert False, f"unknown format {0}".format(form)
+        assert False, f"unknown format {form}"
 
 
 class Settings():
@@ -48,8 +48,8 @@ class Settings():
     @staticmethod
     def combine_settings(main_settings, added_settings):
         '''combine 2 dict/list objects in depth'''
-        if not isinstance(added_settings, type(main_settings)):
-            raise Exception("incompatible types")
+        assert isinstance(added_settings, type(
+            main_settings)), f"incompatible types:{type(added_settings)},{type(main_settings)}"
 
         return SETTINGS_MERGER.merge(main_settings, added_settings)
 
