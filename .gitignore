@@ -3,7 +3,7 @@ venv
 __pycache__
 playground/*
 !playground/.gitkeep
-docs
+docs/api
 
 #for test runs
 trial.py

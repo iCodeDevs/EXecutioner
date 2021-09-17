@@ -6,10 +6,8 @@ from src.sandbox.firejail import FireJail
 from src.program import Program
 from src.evaluate import TestCase
 
-with Program('''
-print("hello world")
-''', 'python3', FireJail()) as PROGRAM:
-    TESTCASE = TestCase("hello world")
-    PROGRAM.compile()
-    PROGRAM.execute(TESTCASE)
-    print(TESTCASE.real_output)
+pgm = Program("print('hello world')", 'python3', FireJail())
+pgm.compile()
+testcase = TestCase()
+pgm.execute(testcase)
+print(testcase.real_output)

@@ -2,13 +2,17 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1fab847da8434968bb3c7bdaeae8fcb1)](https://www.codacy.com/gh/iCodeDevs/EXecutioner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iCodeDevs/EXecutioner&amp;utm_campaign=Badge_Grade)
 
-A python library to execute submitted code inside a Firejail sandbox.
+A python library to execute untrusted code and evaluate the output.
 
-## Notes
+## Requirements
 
-- The library requires [FireJail](https://firejail.wordpress.com/) installed.
-- Linux system
-- doesnot work inside docker instance
+- Python Libraries denoted by requirements.txt
+
+- [FireJail](https://firejail.wordpress.com/) (for FireJail Sandbox)
+
+    ```bash
+        sudo apt install firejail
+    ```
 
 ## INSTALLATION FOR DEV
 

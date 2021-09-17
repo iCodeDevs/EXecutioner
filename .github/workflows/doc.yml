@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - run: pydoctor --make-html --html-output=docs --add-package=src --project-name=EXecutioner
+      - run: pydoctor --make-html --html-output=docs/api --add-package=src --project-name=EXecutioner
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.3
