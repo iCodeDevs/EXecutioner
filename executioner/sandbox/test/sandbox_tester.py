@@ -28,7 +28,8 @@ f.close()
         pgm.compile()
         testcase = TestCase('')
         pgm.execute(testcase)
-        file_path = path.join(path.dirname(pgm.file_location), '../a.txt')
+        file_path = path.join(path.dirname(
+            pgm.sandbox.file_location), '../a.txt')
         if path.exists(file_path):
             with open(file_path, 'r') as file_obj:
                 assert file_obj.read().strip() != "hello world"

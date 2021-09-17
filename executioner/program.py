@@ -1,21 +1,10 @@
 '''represent a program'''
 from typing import Any, Union
+from uuid import uuid4
 from executioner.settings import Settings
 from executioner.sandbox.base_sandbox import SandBox
 from executioner.sandbox.firejail import FireJail
 from executioner.evaluate import TestCase
-
-
-class CompiledProgram:
-
-    '''compiled program class for file based sandboxing'''
-
-    def __init__(self, lang_settings, compiled_file_location):
-        '''initialize file location of compiled code'''
-        self.lang_settings = lang_settings
-        '''The language specific settings object'''
-        self.file_location = compiled_file_location
-        '''The file location of the compiled program after sandbox created it'''
 
 
 class Program:
@@ -24,6 +13,9 @@ class Program:
 
     def __init__(self, pgm_obj: Union[str, Any], language: str, sandbox: SandBox = FireJail()):
         '''Create a new Program object'''
+
+        self.uuid = uuid4()
+        '''The unique id of this program'''
 
         self.language: str = language
         '''The language of the program'''
@@ -39,19 +31,14 @@ class Program:
         '''The language specific settings object'''
         self.sandbox: SandBox = sandbox
         '''The sandbox to be used'''
-        self.compiled_program: CompiledProgram = None
-        '''The compiled program object after compilation'''
-        self.file_location: str = None
-        '''The file location of the program after sandbox created it'''
 
     def compile(self) -> None:
         '''compile the program'''
-        if not self.compiled_program:
-            self.compiled_program = self.sandbox.compile(self)
+        self.sandbox.compile(self)
 
-    def execute(self, input_testcase: TestCase):
+    def execute(self, input_testcase: TestCase) -> None:
         '''execute the program'''
-        return self.sandbox.execute(self, input_testcase)
+        self.sandbox.execute(self, input_testcase)
 
     def __enter__(self):
         return self

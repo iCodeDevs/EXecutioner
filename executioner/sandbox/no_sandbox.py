@@ -2,13 +2,11 @@
 
 A sandbox that doesnot provide security but allows execution of commands with time limit
 '''
-
-from uuid import uuid4
 from os import path, unlink, mkdir
 import subprocess
 import shlex
 import re
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, Dict, Union
 from executioner.sandbox.base_sandbox import SandBox
 from executioner.settings import Settings
 from executioner.errors import (
@@ -21,7 +19,7 @@ from executioner.errors import (
 
 #pylint: disable=W0611,R0401
 if TYPE_CHECKING:
-    from executioner.program import Program, TestCase, CompiledProgram
+    from executioner.program import Program, TestCase
 #pylint: enable=W0611,R0401
 
 
@@ -41,6 +39,13 @@ class NoSandBox(SandBox):
     )
     '''regular expression to extract error text and time'''
 
+    def __init__(self):
+        '''initialize object variables'''
+        self.file_location: str = ''
+        '''The file location of the current program'''
+        self.compile_file_location: str = ''
+        '''The compiled file location of the current program'''
+
     def generate_compile_command(self, command, file_location, _, __, ___):
         '''generate command to compile program'''
         command = command.format(source=file_location)
@@ -53,9 +58,9 @@ class NoSandBox(SandBox):
         command = '/usr/bin/time -p timeout {0} '.format(time_limit) + command
         return command
 
-    def get_compiled_file(self, file_location, lang_settings):
+    def get_compiled_file(self, lang_settings):
         '''get the file location of compiled file'''
-        return lang_settings.get('compiledFormat', '{source}').format(source=file_location)
+        return lang_settings.get('compiledFormat', '{source}').format(source=self.file_location)
 
     def process_error(self, err_text):
         '''get error and real time taken'''
@@ -66,19 +71,16 @@ class NoSandBox(SandBox):
             'sys': float(match.group('sys')),
         }
 
-    def setup_file(self, program, lang_settings):
+    def setup_file(self, program: 'Program', lang_settings: Dict[str, str]) -> None:
         '''set up the file in file system'''
         workspace = Settings.get_workspace()
         if not path.exists(workspace):
             mkdir(workspace)
         file_name = lang_settings.get(
-            'fileFormat', '{filename}').format(filename=uuid4())
-        file_location = path.join(workspace, file_name)
-        file_obj = open(file_location, 'w')
-        file_obj.write(program.code)
-        file_obj.close()
-        program.file_location = file_location
-        return file_location
+            'fileFormat', '{filename}').format(filename=program.uuid)
+        self.file_location = path.join(workspace, file_name)
+        with open(self.file_location, 'w') as file_obj:
+            file_obj.write(program.code)
 
     def identify_error(self, error: str, time: float, time_limit: int) -> Union[RunTimeError, None]:
         '''identify the error'''
@@ -92,16 +94,16 @@ class NoSandBox(SandBox):
         else:
             return None
 
-    def compile(self, program: 'Program', **_) -> 'CompiledProgram':
+    def compile(self, program: 'Program', **_) -> None:
         lang_settings = program.settings
         language = program.language
-        file_location = self.setup_file(program, lang_settings)
+        self.setup_file(program, lang_settings)
         compile_command = lang_settings.get('compileCommand', None)
         if not compile_command:
             raise Exception('Cannot Compile')
 
         compile_command = self.generate_compile_command(compile_command,
-                                                        file_location,
+                                                        self.file_location,
                                                         language,
                                                         100,
                                                         int(lang_settings['memLimit']))
@@ -116,22 +118,15 @@ class NoSandBox(SandBox):
         if len(error.strip()) > 0:
             raise CompilationError()
 
-        from executioner.program import CompiledProgram  # pylint: disable=C0415
-
-        compile_file_location = self.get_compiled_file(
-            file_location, lang_settings)
-        compiled_program = CompiledProgram(
-            lang_settings, compile_file_location)
-        return compiled_program
+        self.compile_file_location = self.get_compiled_file(lang_settings)
 
     def execute(self, program: 'Program', testcase: 'TestCase', **kwargs) -> None:
-        compiled_program = program.compiled_program
-        if not compiled_program:
+        if not self.compile_file_location:
             raise NotCompiledError()
 
         test_input = testcase.input
-        lang_settings = compiled_program.lang_settings
-        compiled_file_location = compiled_program.file_location
+        lang_settings = program.settings
+        compiled_file_location = self.compile_file_location
         exe_command = self.generate_execute_command(lang_settings.get('executeCommand'),
                                                     compiled_file_location,
                                                     lang_settings['timeLimit'],
@@ -153,7 +148,7 @@ class NoSandBox(SandBox):
     def delete(self, program: 'Program', **kwargs) -> None:
         diposibles = program.settings.get('disposible')
         for item in diposibles:
-            folder, file_name = path.split(program.file_location)
+            folder, file_name = path.split(self.file_location)
             item = item.format(source_name=path.splitext(file_name)[0])
             item = path.join(folder, item)
             if path.exists(item):
