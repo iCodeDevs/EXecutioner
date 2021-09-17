@@ -18,6 +18,7 @@ if TYPE_CHECKING:
     from src.program import Program, TestCase, CompiledProgram
 #pylint: enable=W0611,R0401
 
+
 class NoSandBox(SandBox):
 
     '''NoSandBox sandbox class'''

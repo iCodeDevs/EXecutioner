@@ -33,20 +33,20 @@ class Evaluation:
             self.program.compile()
         except CompilationError:
             for testcase in self.testcases:
-                testcase.set_error('compilation error')
+                testcase.set_error(CompilationError())
             return self.testcases
 
         for testcase in self.testcases:
-            recv_output = self.program.execute(testcase)
-            scores = self.get_scores(testcase.output, recv_output)
+            self.program.execute(testcase)
+            scores = self.get_scores(testcase)
             testcase.set_scores(scores)
         return self.testcases
 
-    def get_scores(self, exp_output, recv_output):
+    def get_scores(self, testcase: 'TestCase'):
         '''Run metrics for outputs'''
         score_dict = dict()
         for metric in self.metrics:
-            score = metric.score(exp_output, recv_output)
+            score = metric.score(testcase)
             score_dict[str(metric)] = score
         return score_dict
 
