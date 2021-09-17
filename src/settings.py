@@ -4,7 +4,9 @@ Load and hold the settings for compile,execute and evaluate steps
 import os
 import inspect
 from typing import Any, Callable, Union, IO
+import json
 from deepmerge import Merger
+import yaml
 
 SETTINGS_MERGER = Merger(
     # pass in a list of tuple, with the
@@ -27,10 +29,8 @@ def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:
     '''Return load function for required format'''
 
     if form == 'yaml':
-        import yaml
-        return lambda x: yaml.safe_load(x)
+        return yaml.safe_load
     elif form == 'json':
-        import json
         return json.load
     else:
         raise Exception(message='does not exist')

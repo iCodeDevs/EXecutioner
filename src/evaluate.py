@@ -3,9 +3,11 @@ from typing import Dict, List, TYPE_CHECKING
 from src.metric.equal import Equal
 from src.errors import CompilationError, RunTimeError
 
+#pylint: disable=W0611,R0401
 if TYPE_CHECKING:
     from src.program import Program
     from src.metric.base import BaseMetrics
+#pylint: enable=W0611,R0401
 
 
 class Evaluation:

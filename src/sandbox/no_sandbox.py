@@ -13,9 +13,10 @@ from src.sandbox.base_sandbox import SandBox
 from src.settings import Settings
 from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError
 
+#pylint: disable=W0611,R0401
 if TYPE_CHECKING:
     from src.program import Program, TestCase, CompiledProgram
-
+#pylint: enable=W0611,R0401
 
 class NoSandBox(SandBox):
 
@@ -90,6 +91,7 @@ class NoSandBox(SandBox):
 
         process = subprocess.run(shlex.split(compile_command),
                                  encoding='utf-8',
+                                 check=False,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
         _, errors = process.stdout, process.stderr
@@ -97,7 +99,7 @@ class NoSandBox(SandBox):
         if len(error.strip()) > 0:
             raise CompilationError()
 
-        from src.program import CompiledProgram
+        from src.program import CompiledProgram  # pylint: disable=C0415
 
         compile_file_location = self.get_compiled_file(
             file_location, lang_settings)
@@ -116,6 +118,7 @@ class NoSandBox(SandBox):
                                                     int(lang_settings['memLimit']))
         process = subprocess.run(shlex.split(exe_command),
                                  input=test_input, encoding='utf-8',
+                                 check=False,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
         output, errors = process.stdout, process.stderr
