@@ -17,6 +17,7 @@ class BaseMetrics:
     def __str__(self):
         return self.__class__.__name__
 
+
 class Equal(BaseMetrics):
     '''a 0/1 metric, gives full score if equal'''
 

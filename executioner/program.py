@@ -1,5 +1,4 @@
 '''represent a program'''
-from typing import Any, Union
 from uuid import uuid4
 from executioner.settings import Settings
 from executioner.sandbox.base_sandbox import SandBox
@@ -11,7 +10,7 @@ class Program:
 
     '''Represent a program instance'''
 
-    def __init__(self, pgm_obj: Union[str, Any], language: str, sandbox: SandBox = FireJail()):
+    def __init__(self, pgm_obj: str, language: str, sandbox: SandBox = FireJail()):
         '''Create a new Program object'''
 
         self.uuid = uuid4()
@@ -19,14 +18,8 @@ class Program:
 
         self.language: str = language
         '''The language of the program'''
-        self.code: str = ''
+        self.code: str = pgm_obj
         '''The source code as a string'''
-        if isinstance(pgm_obj, str):
-            self.code: str = pgm_obj
-        elif hasattr(pgm_obj, 'read'):
-            self.code = pgm_obj.read()
-            pgm_obj.close()
-
         self.settings = Settings.get_language_settings(language)
         '''The language specific settings object'''
         self.sandbox: SandBox = sandbox
