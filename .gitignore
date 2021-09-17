@@ -5,6 +5,7 @@ playground/*
 !playground/.gitkeep
 docs/api
 .coverage
+.coverage.*
 #for test runs
 trial.py
 tester.py
