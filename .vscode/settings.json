@@ -5,7 +5,7 @@
         "venv"
     ],
     "python.testing.pytestArgs": [
-        "src",
+        "executioner",
         "-n 3"
     ],
     "python.testing.unittestEnabled": false,

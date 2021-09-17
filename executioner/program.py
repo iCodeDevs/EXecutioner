@@ -1,9 +1,9 @@
 '''represent a program'''
 from typing import Any, Union
-from src.settings import Settings
-from src.sandbox.base_sandbox import SandBox
-from src.sandbox.firejail import FireJail
-from src.evaluate import TestCase
+from executioner.settings import Settings
+from executioner.sandbox.base_sandbox import SandBox
+from executioner.sandbox.firejail import FireJail
+from executioner.evaluate import TestCase
 
 
 class CompiledProgram:

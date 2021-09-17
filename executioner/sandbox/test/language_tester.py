@@ -1,8 +1,8 @@
 '''Languagewise Test Classes'''
 
-from src.evaluate import TestCase
-from src.program import Program
-from src.errors import CompilationError, RunTimeError
+from executioner.evaluate import TestCase
+from executioner.program import Program
+from executioner.errors import CompilationError, RunTimeError
 from .sandbox_tester import BaseTestSandBox
 from .decorators import raises_error
 

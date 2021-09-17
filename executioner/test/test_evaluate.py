@@ -1,10 +1,10 @@
 '''Tests for evaluate Module'''
 
-from src.evaluate import Evaluation, TestCase
-from src.sandbox.firejail import FireJail
-from src.program import Program
-from src.metric.equal import Equal
-from src.errors import CompilationError
+from executioner.evaluate import Evaluation, TestCase
+from executioner.sandbox.firejail import FireJail
+from executioner.program import Program
+from executioner.metric.equal import Equal
+from executioner.errors import CompilationError
 
 
 class TestEvaluation():

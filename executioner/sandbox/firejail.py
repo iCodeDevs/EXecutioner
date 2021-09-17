@@ -1,7 +1,7 @@
 '''FireJail sandbox class'''
 
 from os import path
-from src.sandbox.no_sandbox import NoSandBox
+from executioner.sandbox.no_sandbox import NoSandBox
 
 
 class FireJail(NoSandBox):

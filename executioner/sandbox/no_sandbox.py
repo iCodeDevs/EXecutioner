@@ -9,9 +9,9 @@ import subprocess
 import shlex
 import re
 from typing import TYPE_CHECKING, Union
-from src.sandbox.base_sandbox import SandBox
-from src.settings import Settings
-from src.errors import (
+from executioner.sandbox.base_sandbox import SandBox
+from executioner.settings import Settings
+from executioner.errors import (
     TimeOutError,
     RunTimeError,
     MemoryOutError,
@@ -21,7 +21,7 @@ from src.errors import (
 
 #pylint: disable=W0611,R0401
 if TYPE_CHECKING:
-    from src.program import Program, TestCase, CompiledProgram
+    from executioner.program import Program, TestCase, CompiledProgram
 #pylint: enable=W0611,R0401
 
 
@@ -116,7 +116,7 @@ class NoSandBox(SandBox):
         if len(error.strip()) > 0:
             raise CompilationError()
 
-        from src.program import CompiledProgram  # pylint: disable=C0415
+        from executioner.program import CompiledProgram  # pylint: disable=C0415
 
         compile_file_location = self.get_compiled_file(
             file_location, lang_settings)

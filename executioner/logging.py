@@ -3,7 +3,7 @@
 '''
 
 import logging
-from src.settings import Settings
+from executioner.settings import Settings
 
 LOGGER = logging.getLogger("executioner")
 LOGGER.setLevel(Settings.get("logLevel", logging.WARNING))

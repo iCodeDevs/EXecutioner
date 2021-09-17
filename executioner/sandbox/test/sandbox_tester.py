@@ -1,9 +1,9 @@
 '''SandBox base test classes'''
 
 from os import path
-from src.evaluate import TestCase
-from src.program import Program
-from src.errors import RunTimeError, MemoryOutError, TimeOutError
+from executioner.evaluate import TestCase
+from executioner.program import Program
+from executioner.errors import RunTimeError, MemoryOutError, TimeOutError
 
 
 class BaseTestSandBox():

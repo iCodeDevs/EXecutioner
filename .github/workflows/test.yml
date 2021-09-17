@@ -18,7 +18,9 @@ jobs:
       - run: sudo add-apt-repository -y ppa:deki/firejail
       - run: sudo apt-get update
       - run: sudo apt-get install firejail
-      #install GCC
-      - run: sudo apt-get install gcc
 
-      - run: pytest -n 4
+      - name: Install GCC
+        run: sudo apt-get install gcc
+
+      - name:  Run Tests
+        run: pytest -n 4
