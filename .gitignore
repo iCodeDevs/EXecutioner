@@ -7,3 +7,4 @@ docs/api
 
 #for test runs
 trial.py
+tester.py
