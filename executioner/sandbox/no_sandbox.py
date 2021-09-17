@@ -14,7 +14,8 @@ from executioner.errors import (
     RunTimeError,
     MemoryOutError,
     CompilationError,
-    NotCompiledError
+    NotCompiledError,
+    UnknownCompileCommandError
 )
 
 #pylint: disable=W0611,R0401
@@ -100,19 +101,21 @@ class NoSandBox(SandBox):
         self.setup_file(program, lang_settings)
         compile_command = lang_settings.get('compileCommand', None)
         if not compile_command:
-            raise Exception('Cannot Compile')
+            raise UnknownCompileCommandError()
 
         compile_command = self.generate_compile_command(compile_command,
                                                         self.file_location,
                                                         language,
                                                         100,
-                                                        int(lang_settings['memLimit']))
+                                                        int(lang_settings['memLimit'])
+                                                        )
 
         process = subprocess.run(shlex.split(compile_command),
                                  encoding='utf-8',
                                  check=False,
                                  stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+                                 stderr=subprocess.PIPE
+                                 )
         _, errors = process.stdout, process.stderr
         error, _ = self.process_error(errors)
         if len(error.strip()) > 0:

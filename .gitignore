@@ -4,7 +4,7 @@ __pycache__
 playground/*
 !playground/.gitkeep
 docs/api
-
+.coverage
 #for test runs
 trial.py
 tester.py

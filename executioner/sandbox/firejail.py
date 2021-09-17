@@ -13,10 +13,10 @@ class FireJail(NoSandBox):
         'C'
     ]
     '''The supported languages of this sandbox'''
-    sandbox_command = 'time -p \
+    sandbox_command = '''time -p \
                     firejail --net=none --quiet \
                     --private={folder} --rlimit-as={mem_limit}  timeout {time_limit} \
-                    {command}'
+                    {command}'''
     '''The sandbox's command to be executed'''
 
     def generate_command(self, command, file_location, time_limit, mem_limit):
