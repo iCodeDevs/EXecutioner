@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>src.evaluate.TestCase : API documentation</title>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">
+            EXecutioner API Documentation
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="showPrivate">
+      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    </div>
+
+    <div class="container">
+
+      <div class="page-header">
+        <h1 class="class"><code>src.evaluate.TestCase</code> <small>class documentation</small></h1>
+
+        <span id="partOf">
+          Part of <code><a href="src.html" class="code" data-type="Package">src</a>.<a href="src.evaluate.html" class="code" data-type="Module">evaluate</a></code>
+          
+          <a href="classIndex.html#src.evaluate.TestCase">(View In Hierarchy)</a>
+        </span>
+      </div>
+
+      <div class="extrasDocstring">
+        
+      </div>
+
+      <div class="moduleDocstring">
+        <div><p>Represent a testcase</p></div>
+      </div>
+
+      <div id="splitTables">
+        <table class="children sortable" id="id5">
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><a href="src.evaluate.TestCase.html#__init__" class="code" data-type="Method">__init__</a></td>
+    <td><span>Create a new testcase using given input and output</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="src.evaluate.TestCase.html#input" class="code" data-type="Instance Variable">input</a></td>
+    <td><span>input for this testcase</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="src.evaluate.TestCase.html#output" class="code" data-type="Instance Variable">output</a></td>
+    <td><span>expected output for this testcase</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="src.evaluate.TestCase.html#real_output" class="code" data-type="Instance Variable">real_output</a></td>
+    <td><span>real output for this testcase after execution</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="src.evaluate.TestCase.html#error" class="code" data-type="Instance Variable">error</a></td>
+    <td><span>error received after execution</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="src.evaluate.TestCase.html#time" class="code" data-type="Instance Variable">time</a></td>
+    <td><span>time taken to execute</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="src.evaluate.TestCase.html#scores" class="code" data-type="Instance Variable">scores</a></td>
+    <td><span>The score Dictionary Object</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="src.evaluate.TestCase.html#set_error" class="code" data-type="Method">set_error</a></td>
+    <td><span>set error while evaluation</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="src.evaluate.TestCase.html#set_scores" class="code" data-type="Method">set_scores</a></td>
+    <td><span>set the scores for testcase for each metrics</span></td>
+  </tr>
+</table>
+        
+
+          
+      </div>
+
+      <div id="childList">
+
+        <div class="basemethod">
+  
+  <a name="src.evaluate.TestCase.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    __init__(self, testcase_input="""""", testcase_output=""""""):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Create a new testcase using given input and output</p></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="src.evaluate.TestCase.input">
+    
+  </a>
+  <a name="input">
+    
+  </a>
+  <div class="functionHeader">
+    input =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div><p>input for this testcase</p></div> (type: <code>str</code>)
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="src.evaluate.TestCase.output">
+    
+  </a>
+  <a name="output">
+    
+  </a>
+  <div class="functionHeader">
+    output =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div><p>expected output for this testcase</p></div> (type: <code>str</code>)
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="src.evaluate.TestCase.real_output">
+    
+  </a>
+  <a name="real_output">
+    
+  </a>
+  <div class="functionHeader">
+    real_output =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div><p>real output for this testcase after execution</p></div> (type: <code>str</code>)
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="src.evaluate.TestCase.error">
+    
+  </a>
+  <a name="error">
+    
+  </a>
+  <div class="functionHeader">
+    error =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div><p>error received after execution</p></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="src.evaluate.TestCase.time">
+    
+  </a>
+  <a name="time">
+    
+  </a>
+  <div class="functionHeader">
+    time =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div><p>time taken to execute</p></div> (type: <code>float</code>)
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="src.evaluate.TestCase.scores">
+    
+  </a>
+  <a name="scores">
+    
+  </a>
+  <div class="functionHeader">
+    scores =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div><p>The score Dictionary Object</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="src.evaluate.TestCase.set_error">
+    
+  </a>
+  <a name="set_error">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_error(self, error):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>set error while evaluation</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="src.evaluate.TestCase.set_scores">
+    
+  </a>
+  <a name="set_scores">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_scores(self, score_dict):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>set the scores for testcase for each metrics</p></div>
+  </div>
+</div>
+
+      </div>
+      <address>
+        <a href="index.html">API Documentation</a> for EXecutioner, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-09-17 10:30:37.
+      </address>
+
+    </div>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>
