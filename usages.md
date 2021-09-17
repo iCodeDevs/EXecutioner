@@ -7,9 +7,9 @@ The program class represents a program to be executed.
 ### Simple Usage
 
 ```python
-from src.sandbox.firejail import FireJail
-from src.program import Program
-from src.evaluate import TestCase
+from executioner.sandbox.firejail import FireJail
+from executioner.program import Program
+from executioner.evaluate import TestCase
 
 pgm = Program("print('hello world')", 'python3', FireJail())
 pgm.compile()
@@ -22,9 +22,9 @@ print(testcase.real_output)
 ### As ContextManager
 
 ```python
-from src.sandbox.firejail import FireJail
-from src.program import Program
-from src.evaluate import TestCase
+from executioner.sandbox.firejail import FireJail
+from executioner.program import Program
+from executioner.evaluate import TestCase
 with Program("print('hello world')", 'python3', FireJail()) as pgm:
     pgm.compile()
     testcase = TestCase()
@@ -40,10 +40,10 @@ The Evaluation class is used to execute and evaluate a program on multiple testc
 ### Simple Usage
 
 ```python
-from src.sandbox.firejail import FireJail
-from src.program import Program
-from src.evaluate import TestCase, Evaluation
-from src.metric.equal import Equal
+from executioner.sandbox.firejail import FireJail
+from executioner.program import Program
+from executioner.evaluate import TestCase, Evaluation
+from executioner.metric.equal import Equal
 with Program('''
 a = int(input())
 print(a)
