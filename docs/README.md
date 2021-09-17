@@ -4,8 +4,8 @@ This is a work in progress
 
 ## Usages
 
-- [Usages](/usages)
+- [Usages](usages)
 
-- [Config File specification](/config)
+- [Config File specification](config)
 
-## [API](/api)
+## [API](api)
