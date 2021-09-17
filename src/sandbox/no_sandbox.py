@@ -8,7 +8,7 @@ from os import path, unlink, mkdir
 import subprocess
 import shlex
 import re
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 from src.sandbox.base_sandbox import SandBox
 from src.settings import Settings
 from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError
@@ -30,7 +30,9 @@ class NoSandBox(SandBox):
         'C++',
     ]
     '''List of supported languages by this sandbox'''
-    error_reg = re.compile('(?s)(?P<error>.*)real (?P<real>[0-9]*[.][0-9]*)')
+    error_reg = re.compile(
+        r'''(?s)(?P<error>.*)real (?P<real>[0-9]*[.][0-9]*)\nuser (?P<user>[0-9]*[.][0-9]*)\nsys (?P<sys>[0-9]*[.][0-9]*)'''  # pylint: disable=C0301
+    )
     '''regular expression to extract error text and time'''
 
     def generate_compile_command(self, command, file_location, _, __, ___):
@@ -52,7 +54,11 @@ class NoSandBox(SandBox):
     def process_error(self, err_text):
         '''get error and real time taken'''
         match = self.error_reg.match(err_text)
-        return match.group('error'), float(match.group('real'))
+        return match.group('error'), {
+            'real': float(match.group('real')),
+            'user': float(match.group('user')),
+            'sys': float(match.group('sys')),
+        }
 
     def setup_file(self, program, lang_settings):
         '''set up the file in file system'''
@@ -68,13 +74,17 @@ class NoSandBox(SandBox):
         program.file_location = file_location
         return file_location
 
-    def identify_error(self, error: str, time, time_limit) -> RunTimeError:
+    def identify_error(self, error: str, time: float, time_limit: int) -> Union[RunTimeError, None]:
         '''identify the error'''
+
         if time > time_limit:
             return TimeOutError()
         elif error.rfind('Memory') != -1:
             return MemoryOutError()
-        return RunTimeError()
+        elif len(error.strip()) > 0:
+            return RunTimeError()
+        else:
+            return None
 
     def compile(self, program: 'Program', **_) -> 'CompiledProgram':
         lang_settings = program.settings
@@ -124,11 +134,12 @@ class NoSandBox(SandBox):
                                  stderr=subprocess.PIPE)
         output, errors = process.stdout, process.stderr
         error, time = self.process_error(errors)
-        if len(error.strip()) > 0:
-            testcase.error = self.identify_error(
-                error, time, int(lang_settings['timeLimit']))
+        max_time = max(time.get('user', 0) +
+                       time.get('sys', 0), time.get('real', 0))
+        testcase.error = self.identify_error(
+            error, max_time, int(lang_settings['timeLimit']))
         testcase.real_output = output
-        testcase.time = time
+        testcase.time = max_time
 
     def delete(self, program: 'Program', **kwargs) -> None:
         file_location = program.file_location

@@ -92,3 +92,22 @@ time.sleep(10)
         testcase = TestCase()
         pgm.execute(testcase)
         assert isinstance(testcase.error, TimeOutError)
+
+    def test_multithread_runtime_limit(self):
+        '''Test the runtime limit for multithreaded code'''
+        code = '''
+from multiprocessing import Pool
+
+def f(t):
+    a = 0
+    for i in range(int(10**t)):
+        a += 1
+    return a
+
+with Pool(2) as p:
+    print(p.map(f, [8.1, 8.1]))'''
+        pgm = Program(code, 'python3', self.sandbox)
+        pgm.compile()
+        testcase = TestCase()
+        pgm.execute(testcase)
+        assert isinstance(testcase.error, TimeOutError)
