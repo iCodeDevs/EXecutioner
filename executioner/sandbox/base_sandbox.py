@@ -13,10 +13,6 @@ class SandBox:
     '''SandBox base class'''
     supported_languages = []
 
-    def can_run(self, language: str) -> bool:
-        '''Check if the sandbox can this language'''
-        return language in self.supported_languages
-
     def compile(self, program: 'Program', **kwarg) -> None:
         '''compile the Program'''
         raise NotImplementedError

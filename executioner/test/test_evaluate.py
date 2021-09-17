@@ -3,7 +3,7 @@
 from executioner.evaluate import Evaluation, TestCase
 from executioner.sandbox.firejail import FireJail
 from executioner.program import Program
-from executioner.metric.equal import Equal
+from executioner.metric import Equal
 from executioner.errors import CompilationError
 
 
