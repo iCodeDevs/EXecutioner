@@ -34,6 +34,7 @@ def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:
         return json.loads
     else:
         assert False, f"unknown format {form}"
+    return None
 
 
 class Settings():

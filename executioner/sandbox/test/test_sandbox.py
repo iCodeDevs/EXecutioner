@@ -15,7 +15,8 @@ class TestNoSandBox(CTestSandBox, PythonTestSandBox):
     def test_no_workspace(self, tmp_path: Path):
         '''Test if workspace does not exist'''
         with Program("print('hello world')", 'python3', self.sandbox) as pgm:
-            Settings.load_added_settings(f'workspace: {str(tmp_path.joinpath("fake"))}')
+            Settings.load_added_settings(
+                f'workspace: {str(tmp_path.joinpath("fake"))}')
             pgm.compile()
             Settings.load_added_settings('workspace: playground')
 
