@@ -53,6 +53,12 @@ class Program:
         '''execute the program'''
         return self.sandbox.execute(self, input_testcase)
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        del self
+
     def __del__(self):
         '''Delete history and files of program in sandbox instance'''
         self.sandbox.delete(self)

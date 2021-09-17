@@ -11,7 +11,13 @@ import re
 from typing import TYPE_CHECKING, Union
 from src.sandbox.base_sandbox import SandBox
 from src.settings import Settings
-from src.errors import TimeOutError, RunTimeError, MemoryOutError, CompilationError,NotCompiledError
+from src.errors import (
+    TimeOutError,
+    RunTimeError,
+    MemoryOutError,
+    CompilationError,
+    NotCompiledError
+)
 
 #pylint: disable=W0611,R0401
 if TYPE_CHECKING:
