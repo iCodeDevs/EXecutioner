@@ -4,10 +4,10 @@ from typing import List, Dict
 from itertools import zip_longest
 from io import TextIOWrapper
 from tabulate import tabulate
-from executioner.metric import Equal, BaseMetrics
-from executioner.sandbox.firejail import FireJail
-from executioner.program import Program
-from executioner.evaluate import TestCase, Evaluation
+from .metric import Equal, BaseMetrics
+from .sandbox.firejail import FireJail
+from .program import Program
+from .evaluate import TestCase, Evaluation
 
 
 def setup_testcases(args: argparse.Namespace) -> List[TestCase]:

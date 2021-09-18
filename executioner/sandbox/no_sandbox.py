@@ -7,7 +7,6 @@ import subprocess
 import shlex
 import re
 from typing import TYPE_CHECKING, Dict, Union
-from executioner.sandbox.base_sandbox import SandBox
 from executioner.settings import Settings
 from executioner.errors import (
     TimeOutError,
@@ -15,6 +14,7 @@ from executioner.errors import (
     MemoryOutError,
     CompilationError,
 )
+from .base_sandbox import SandBox
 
 #pylint: disable=W0611,R0401
 if TYPE_CHECKING:

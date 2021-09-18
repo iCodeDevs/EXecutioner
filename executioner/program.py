@@ -1,9 +1,9 @@
 '''represent a program'''
 from uuid import uuid4
-from executioner.settings import Settings
-from executioner.sandbox.base_sandbox import SandBox
-from executioner.sandbox.firejail import FireJail
-from executioner.evaluate import TestCase
+from .settings import Settings
+from .sandbox.base_sandbox import SandBox
+from .sandbox.firejail import FireJail
+from .evaluate import TestCase
 
 
 class Program:

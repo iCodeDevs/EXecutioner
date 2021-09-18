@@ -1,7 +1,7 @@
 '''Evaluate the output of program with the expected output using various Metrices'''
 from typing import Dict, List, TYPE_CHECKING
-from executioner.metric import Equal
-from executioner.errors import CompilationError, RunTimeError
+from .metric import Equal
+from .errors import CompilationError, RunTimeError
 
 #pylint: disable=W0611,R0401
 if TYPE_CHECKING:
