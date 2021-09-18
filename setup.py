@@ -35,6 +35,7 @@ setuptools.setup(
         "executioner",
         "executioner.metric",
         "executioner.sandbox",
+        "executioner.sandbox.test",
         "executioner.test",
     ],
     python_requires=">=3.6",
