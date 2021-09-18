@@ -74,7 +74,7 @@ def main():
                         help="The sandbox to be used (default: FireJail) [TODO]")
     parser.add_argument("-m", "--metrics", nargs='*', default=[Equal()],
                         help="The metrics to be used to evaluate the outputs [TODO]")
-    parser.add_argument("-i", "--input", nargs='*', default=[""], type=open,
+    parser.add_argument("-i", "--input", nargs='*', default=[], type=open,
                         help="The files to be used as input for program (default: None)")
     parser.add_argument("-o", "--output", nargs='*', default=[], type=open,
                         help="The files to be used as expected output for program, \
@@ -92,10 +92,13 @@ def main():
                 "if output is given, number of outputs should match number of inputs"
             execute_evaluation(pgm, testcases, args.metrics)
             display_evaluation(testcases, args.metrics)
-        else:
+        elif len(args.input) >= 1:
             pgm.compile()
             for testcase in testcases:
                 execute_testcase(pgm, testcase)
+        else:
+            pgm.compile()
+            execute_testcase(pgm,TestCase())
 
 
 if __name__ == '__main__':
