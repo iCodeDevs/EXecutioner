@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyExecutioner",
-    version="0.0.5",
+    version="0.0.7",
     author="dravog",
     author_email="dravog78@gmail.com",
     description="A library to execute code",
@@ -25,11 +25,16 @@ setuptools.setup(
     install_requires=[
         "setuptools>=42",
         "wheel",
-        "deepmerge==0.1.0",
-        "PyYAML",
+        "deepmerge>=0.1.0",
+        "PyYAML>=5.4.1",
         "tabulate",
     ],
     package_dir={"": "."},
-    packages=["executioner"],
+    packages=[
+        "executioner",
+        "executioner.metric",
+        "executioner.sandbox",
+        "executioner.test",
+    ],
     python_requires=">=3.6",
 )
