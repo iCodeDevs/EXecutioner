@@ -12,19 +12,24 @@ jobs:
           python-version: "3.x"
           architecture: "x64"
 
-      - uses: actions/cache@v2
-        id: cache-id
+      - name: cache setup
+        uses: actions/cache@v2
         with:
-          path: ${{ runner.temp }}/cache-directory-example
-          key: ${{ runner.os }}-cache-pip-${{ hashFiles('**/requirements.txt') }}
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      - uses: airvzxf/cache-anything-new-action@v1.0.1
-        with:
-          script: 'install.sh'
-          is_cached: ${{ steps.cache-id.outputs.cache-hit }}
-          cache: ${{ runner.temp }}/cache-directory-example
-          snapshot: '/'
-          exclude: '/boot /data /dev /mnt /proc /run /sys'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - run: sudo apt install software-properties-common
+      #install firejail
+      - run: sudo add-apt-repository -y ppa:deki/firejail
+      - run: sudo apt-get update
+      - run: sudo apt-get install firejail
+
+      - name: Install GCC
+        run: sudo apt-get install gcc
 
       - name: Run Tests
         run: pytest -n 4
