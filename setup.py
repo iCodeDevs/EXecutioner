@@ -1,12 +1,11 @@
 '''Setup file for Pip package'''
 import setuptools
-
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="pyExecutioner",
-    version="0.0.1",
+    version="0.0.2",
     author="dravog",
     author_email="dravog78@gmail.com",
     description="A library to execute code",
