@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyExecutioner",
-    version="0.0.6",
+    version="0.0.7",
     author="dravog",
     author_email="dravog78@gmail.com",
     description="A library to execute code",
@@ -29,6 +29,7 @@ setuptools.setup(
         "PyYAML>=5.4.1",
         "tabulate",
     ],
+    package_data={'': ['settings.yaml']},
     package_dir={"": "."},
     packages=[
         "executioner",
