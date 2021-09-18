@@ -71,9 +71,9 @@ def main():
     parser.add_argument("-l", "--language", required=True,
                         help="The language of the source file")
     parser.add_argument("-s", "--sandbox", default=FireJail(),
-                        help="The sandbox to be used (default: FireJail)")
+                        help="The sandbox to be used (default: FireJail) [TODO]")
     parser.add_argument("-m", "--metrics", nargs='*', default=[Equal()],
-                        help="The metrics to be used to evaluate the outputs")
+                        help="The metrics to be used to evaluate the outputs [TODO]")
     parser.add_argument("-i", "--input", nargs='*', default=[], type=open,
                         help="The files to be used as input for program (default: None)")
     parser.add_argument("-o", "--output", nargs='*', default=[], type=open,

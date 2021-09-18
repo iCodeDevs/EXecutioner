@@ -9,3 +9,6 @@ docs/api
 #for test runs
 trial.py
 tester.py
+
+dist
+*.egg-info

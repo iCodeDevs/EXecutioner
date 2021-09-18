@@ -22,5 +22,12 @@ jobs:
       - name: Install GCC
         run: sudo apt-get install gcc
 
-      - name:  Run Tests
+      - name: Run Tests
         run: pytest -n 4
+
+      - name: Publish package to PyPI
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
