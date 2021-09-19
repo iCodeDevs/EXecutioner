@@ -116,7 +116,7 @@ class NoSandBox(SandBox):
         _, errors = process.stdout, process.stderr
         error, _ = self.process_error(errors)
         if len(error.strip()) > 0:
-            raise CompilationError(error)
+            raise CompilationError(errors)
 
         self.compile_file_location = self.get_compiled_file(lang_settings)
 
