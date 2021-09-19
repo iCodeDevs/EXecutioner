@@ -113,10 +113,10 @@ class NoSandBox(SandBox):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE
                                  )
-        _, errors = process.stdout, process.stderr
+        output, errors = process.stdout, process.stderr
         error, _ = self.process_error(errors)
         if len(error.strip()) > 0:
-            raise CompilationError(errors)
+            raise CompilationError(output)
 
         self.compile_file_location = self.get_compiled_file(lang_settings)
 
