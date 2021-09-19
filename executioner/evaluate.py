@@ -100,7 +100,7 @@ class TestCase:
         return {
             "input": self.input,
             "output": self.output,
-            "error": str(self.error),
+            "error": f"{self.error.__class__.__name__} : {str(self.error)}",
             "time": self.time,
             "scores": self.scores,
         }
@@ -109,7 +109,7 @@ class TestCase:
     def from_json_object(data: Dict[str, Any]) -> 'TestCase':
         '''Generate TestCase object from JSON object'''
         testcase = TestCase(data["input"], data["output"])
-        testcase.error = data.get("error")
+        testcase.error = data.get("error")  # add error conversion
         testcase.time = data.get("time", -1)
         testcase.scores = data.get("scores", dict())
         return testcase

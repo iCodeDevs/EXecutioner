@@ -89,7 +89,7 @@ class NoSandBox(SandBox):
         elif error.rfind('Memory') != -1:
             return MemoryOutError()
         elif len(error.strip()) > 0:
-            return RunTimeError()
+            return RunTimeError(error)
         else:
             return None
 
@@ -116,7 +116,7 @@ class NoSandBox(SandBox):
         _, errors = process.stdout, process.stderr
         error, _ = self.process_error(errors)
         if len(error.strip()) > 0:
-            raise CompilationError()
+            raise CompilationError(error)
 
         self.compile_file_location = self.get_compiled_file(lang_settings)
 

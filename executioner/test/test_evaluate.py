@@ -1,5 +1,5 @@
 '''Tests for evaluate Module'''
-
+import json
 from executioner.evaluate import Evaluation, TestCase
 from executioner.sandbox.firejail import FireJail
 from executioner.program import Program
@@ -47,5 +47,5 @@ print("hello world"
         testcases = [TestCase(), TestCase("h", "h")]
         ev1 = Evaluation(pgm1, testcases)
         jsobj = ev1.to_json_object()
-        ev2 = Evaluation.from_json_object(jsobj)
+        ev2 = Evaluation.from_json_object(json.loads(json.dumps(jsobj)))
         assert ev1 == ev2
