@@ -40,3 +40,12 @@ print("hello world"
         ev_obj.evaluate()
         assert all([isinstance(test.error, CompilationError)
                     for test in testcases])
+
+    def test_json_conversion(self):
+        '''test json conversion'''
+        pgm1 = Program("print('hello world')", 'python3', FireJail())
+        testcases = [TestCase(), TestCase("h", "h")]
+        ev1 = Evaluation(pgm1, testcases)
+        jsobj = ev1.to_json_obj()
+        ev2 = Evaluation.from_json_object(jsobj)
+        assert ev1 == ev2

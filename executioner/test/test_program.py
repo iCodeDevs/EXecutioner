@@ -22,3 +22,10 @@ class TestProgram():
             testcase = TestCase()
             pgm.execute(testcase)
             assert testcase.real_output.strip() == "hello world"
+
+    def test_json_conversion(self):
+        '''test json conversion'''
+        pgm1 = Program("print('hello world')", 'python3', FireJail())
+        jsobj = pgm1.to_json_obj()
+        pgm2 = Program.from_json_obj(jsobj)
+        assert pgm1 == pgm2

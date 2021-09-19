@@ -98,7 +98,7 @@ def main():
                 execute_testcase(pgm, testcase)
         else:
             pgm.compile()
-            execute_testcase(pgm,TestCase())
+            execute_testcase(pgm, TestCase())
 
 
 if __name__ == '__main__':

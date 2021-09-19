@@ -1,4 +1,5 @@
 '''represent a program'''
+from typing import Any, Dict
 from uuid import uuid4
 from .settings import Settings
 from .sandbox.base_sandbox import SandBox
@@ -32,6 +33,21 @@ class Program:
     def execute(self, input_testcase: TestCase) -> None:
         '''execute the program'''
         self.sandbox.execute(self, input_testcase)
+
+    def to_json_obj(self) -> Dict[str, Any]:
+        '''convert to JSON object'''
+        return {
+            "code": self.code,
+            "language": self.language,
+        }
+
+    @staticmethod
+    def from_json_obj(data: Dict[str, Any]) -> 'Program':
+        '''Generate Program object from JSON object'''
+        return Program(data["code"], data["language"])
+
+    def __eq__(self, o: 'Program') -> bool:
+        return (self.code == o.code) and (self.language == o.language)
 
     def __enter__(self):
         return self

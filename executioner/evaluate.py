@@ -1,5 +1,5 @@
 '''Evaluate the output of program with the expected output using various Metrices'''
-from typing import Dict, List, TYPE_CHECKING
+from typing import Any, Dict, List, TYPE_CHECKING
 from .metric import Equal
 from .errors import CompilationError, RunTimeError
 
@@ -42,6 +42,28 @@ class Evaluation:
             testcase.set_scores(scores)
         return self.testcases
 
+    def to_json_obj(self) -> Dict[str, Any]:
+        '''Convert into JSON object'''
+        return {
+            "program": self.program.to_json_obj(),
+            "testcases": [testcase.to_json_obj() for testcase in self.testcases]
+        }
+
+    @staticmethod
+    def from_json_object(data: Dict[str, Any]) -> 'TestCase':
+        '''Generate TestCase object from JSON object'''
+        from executioner.program import Program  # pylint: disable=C0415
+        return Evaluation(
+            Program.from_json_obj(data["program"]),
+            testcases=[TestCase.from_json_object(
+                test_obj) for test_obj in data["testcases"]]
+        )
+
+    def __eq__(self, o: 'Evaluation') -> bool:
+        return (self.program == o.program) and all(
+            [stest == otest for stest, otest in zip(self.testcases, o.testcases)]
+            )
+
     def get_scores(self, testcase: 'TestCase'):
         '''Run metrics for outputs'''
         score_dict = dict()
@@ -71,6 +93,28 @@ class TestCase:
         '''time taken to execute'''
         self.scores: Dict[str, int] = dict()
         '''The score Dictionary Object'''
+
+    def to_json_obj(self) -> Dict[str, Any]:
+        '''Convert into JSON object'''
+        return {
+            "input": self.input,
+            "output": self.output,
+            "error": str(self.error),
+            "time": self.time,
+            "scores": self.scores,
+        }
+
+    @staticmethod
+    def from_json_object(data: Dict[str, Any]) -> 'TestCase':
+        '''Generate TestCase object from JSON object'''
+        testcase = TestCase(data["input"], data["output"])
+        testcase.error = data.get("error")
+        testcase.time = data.get("time", -1)
+        testcase.scores = data.get("scores", dict())
+        return testcase
+
+    def __eq__(self, o: 'TestCase') -> bool:
+        return (self.input == o.input) and (self.output == o.output)
 
     def set_error(self, error):
         '''set error while evaluation'''
