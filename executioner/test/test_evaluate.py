@@ -46,6 +46,6 @@ print("hello world"
         pgm1 = Program("print('hello world')", 'python3', FireJail())
         testcases = [TestCase(), TestCase("h", "h")]
         ev1 = Evaluation(pgm1, testcases)
-        jsobj = ev1.to_json_obj()
+        jsobj = ev1.to_json_object()
         ev2 = Evaluation.from_json_object(jsobj)
         assert ev1 == ev2

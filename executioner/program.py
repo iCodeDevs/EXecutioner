@@ -34,7 +34,7 @@ class Program:
         '''execute the program'''
         self.sandbox.execute(self, input_testcase)
 
-    def to_json_obj(self) -> Dict[str, Any]:
+    def to_json_object(self) -> Dict[str, Any]:
         '''convert to JSON object'''
         return {
             "code": self.code,
@@ -42,7 +42,7 @@ class Program:
         }
 
     @staticmethod
-    def from_json_obj(data: Dict[str, Any]) -> 'Program':
+    def from_json_object(data: Dict[str, Any]) -> 'Program':
         '''Generate Program object from JSON object'''
         return Program(data["code"], data["language"])
 

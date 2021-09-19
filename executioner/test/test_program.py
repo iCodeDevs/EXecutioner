@@ -26,6 +26,6 @@ class TestProgram():
     def test_json_conversion(self):
         '''test json conversion'''
         pgm1 = Program("print('hello world')", 'python3', FireJail())
-        jsobj = pgm1.to_json_obj()
-        pgm2 = Program.from_json_obj(jsobj)
+        jsobj = pgm1.to_json_object()
+        pgm2 = Program.from_json_object(jsobj)
         assert pgm1 == pgm2

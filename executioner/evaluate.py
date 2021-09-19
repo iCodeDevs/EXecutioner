@@ -42,27 +42,28 @@ class Evaluation:
             testcase.set_scores(scores)
         return self.testcases
 
-    def to_json_obj(self) -> Dict[str, Any]:
+    def to_json_object(self) -> Dict[str, Any]:
         '''Convert into JSON object'''
         return {
-            "program": self.program.to_json_obj(),
-            "testcases": [testcase.to_json_obj() for testcase in self.testcases]
+            "program": self.program.to_json_object(),
+            "testcases": [testcase.to_json_object() for testcase in self.testcases]
         }
 
     @staticmethod
-    def from_json_object(data: Dict[str, Any]) -> 'TestCase':
+    def from_json_object(data: Dict[str, Any]) -> 'Evaluation':
         '''Generate TestCase object from JSON object'''
         from executioner.program import Program  # pylint: disable=C0415
         return Evaluation(
-            Program.from_json_obj(data["program"]),
+            Program.from_json_object(data["program"]),
             testcases=[TestCase.from_json_object(
                 test_obj) for test_obj in data["testcases"]]
         )
 
     def __eq__(self, o: 'Evaluation') -> bool:
         return (self.program == o.program) and all(
-            [stest == otest for stest, otest in zip(self.testcases, o.testcases)]
-            )
+            [stest == otest for stest, otest in zip(
+                self.testcases, o.testcases)]
+        )
 
     def get_scores(self, testcase: 'TestCase'):
         '''Run metrics for outputs'''
@@ -94,7 +95,7 @@ class TestCase:
         self.scores: Dict[str, int] = dict()
         '''The score Dictionary Object'''
 
-    def to_json_obj(self) -> Dict[str, Any]:
+    def to_json_object(self) -> Dict[str, Any]:
         '''Convert into JSON object'''
         return {
             "input": self.input,
