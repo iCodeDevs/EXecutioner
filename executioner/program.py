@@ -1,5 +1,5 @@
 '''represent a program'''
-from typing import Any, Dict
+from typing import Any, Dict, List
 from uuid import uuid4
 from .settings import Settings
 from .sandbox.base_sandbox import SandBox
@@ -39,12 +39,19 @@ class Program:
         return {
             "code": self.code,
             "language": self.language,
+            "sand_box": self.sandbox.to_json_object(),
         }
 
     @staticmethod
     def from_json_object(data: Dict[str, Any]) -> 'Program':
         '''Generate Program object from JSON object'''
-        return Program(data["code"], data["language"])
+        pgm = Program(data["code"], data["language"])
+        sandbox_json: List = data.get("sand_box")
+        if not sandbox_json:
+            return pgm
+        sandbox = SandBox.from_json_object(sandbox_json)
+        pgm.sandbox = sandbox if sandbox else pgm.sandbox
+        return pgm
 
     def __eq__(self, o: 'Program') -> bool:
         return (self.code == o.code) and (self.language == o.language)

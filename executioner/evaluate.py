@@ -1,12 +1,11 @@
 '''Evaluate the output of program with the expected output using various Metrices'''
 from typing import Any, Dict, List, TYPE_CHECKING
-from .metric import Equal
+from .metric import Equal, BaseMetrics
 from .errors import CompilationError, RunTimeError
 
 #pylint: disable=W0611,R0401
 if TYPE_CHECKING:
     from executioner.program import Program
-    from executioner.metric import BaseMetrics
 #pylint: enable=W0611,R0401
 
 
@@ -46,7 +45,8 @@ class Evaluation:
         '''Convert into JSON object'''
         return {
             "program": self.program.to_json_object(),
-            "testcases": [testcase.to_json_object() for testcase in self.testcases]
+            "testcases": [testcase.to_json_object() for testcase in self.testcases],
+            "metrics": [metric.to_json_object() for metric in self.metrics],
         }
 
     @staticmethod
@@ -56,13 +56,19 @@ class Evaluation:
         return Evaluation(
             Program.from_json_object(data["program"]),
             testcases=[TestCase.from_json_object(
-                test_obj) for test_obj in data["testcases"]]
+                test_obj) for test_obj in data["testcases"]],
+            metrics=[BaseMetrics.from_json_object(
+                metric_obj) for metric_obj in data['metrics'] if metric_obj]
         )
 
     def __eq__(self, o: 'Evaluation') -> bool:
         return (self.program == o.program) and all(
             [stest == otest for stest, otest in zip(
                 self.testcases, o.testcases)]
+        ) and all(
+            [smetric == ometric for smetric, ometric in zip(
+                self.metrics, o.metrics
+            )]
         )
 
     def get_scores(self, testcase: 'TestCase'):
@@ -100,6 +106,7 @@ class TestCase:
         return {
             "input": self.input,
             "output": self.output,
+            "real_output": self.real_output,
             "error": f"{self.error.__class__.__name__} : {str(self.error)}",
             "time": self.time,
             "scores": self.scores,
@@ -109,6 +116,7 @@ class TestCase:
     def from_json_object(data: Dict[str, Any]) -> 'TestCase':
         '''Generate TestCase object from JSON object'''
         testcase = TestCase(data["input"], data["output"])
+        testcase.real_output = data.get("real_output", "")
         testcase.error = data.get("error")  # add error conversion
         testcase.time = data.get("time", -1)
         testcase.scores = data.get("scores", dict())

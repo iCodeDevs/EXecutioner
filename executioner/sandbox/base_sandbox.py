@@ -1,6 +1,6 @@
 '''Base sandbox class'''
-from typing import TYPE_CHECKING
-
+from typing import TYPE_CHECKING, List, Tuple, Union
+from executioner.utils import import_class, get_import_path
 #pylint: disable=W0611,R0401
 if TYPE_CHECKING:
     from executioner.evaluate import TestCase
@@ -24,3 +24,19 @@ class SandBox:
     def delete(self, program: 'Program', **kwargs) -> None:
         '''cleanup program related data from sandbox'''
         raise NotImplementedError
+
+    def to_json_object(self) -> Tuple:
+        '''convert to JSON object'''
+        return get_import_path(self)
+
+    @staticmethod
+    def from_json_object(data: List) -> Union['SandBox', None]:
+        '''Generate Program object from JSON object'''
+        cls = import_class(*data)
+        if not issubclass(cls, SandBox):
+            return None
+        else:
+            return cls()
+
+    def __eq__(self, o: 'SandBox') -> bool:
+        return get_import_path(self) == get_import_path(o)
