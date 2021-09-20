@@ -1,6 +1,7 @@
 '''Tests for NoSandBox sandbox'''
 from pathlib import Path
-from executioner.sandbox.no_sandbox import NoSandBox
+import json
+from executioner.sandbox.no_sandbox import NoSandBox, SandBox
 from executioner.sandbox.firejail import FireJail
 from executioner.settings import Settings
 from executioner.program import Program
@@ -24,3 +25,20 @@ class TestNoSandBox(CTestSandBox, PythonTestSandBox):
 class TestFireJail(CTestSandBox, PythonTestSandBox, SecureTestSandBox):
     '''Tests for FireJail class'''
     sandbox = FireJail()
+
+
+class TestSandBox():
+    '''Test SandBox class'''
+
+    def test_json_conversion(self):
+        '''Test json conversion'''
+        sbox1 = SandBox()
+        jsobj = sbox1.to_json_object()
+        sbox2 = SandBox.from_json_object(json.loads(json.dumps(jsobj)))
+        assert sbox1 == sbox2
+
+    def test_json_conversion_non_sandbox(self):
+        '''test json conversion of non sandbox class'''
+        jsobj = ["executioner.program", "Program"]
+        metric1 = SandBox.from_json_object(jsobj)
+        assert metric1 is None

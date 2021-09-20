@@ -1,7 +1,24 @@
 '''Tests for the basic metrics'''
-
-from executioner.metric import Equal
+import json
+from executioner.metric import Equal, BaseMetrics
 from executioner.evaluate import TestCase
+
+
+class TestBaseMetrics():
+    '''Test BaseMetrics class'''
+
+    def test_json_conversion(self):
+        '''Test json conversion'''
+        metric1 = BaseMetrics()
+        jsobj = metric1.to_json_object()
+        metric2 = BaseMetrics.from_json_object(json.loads(json.dumps(jsobj)))
+        assert metric1 == metric2
+
+    def test_json_conversion_non_metric(self):
+        '''test json conversion of non metric class'''
+        jsobj = ["executioner.program", "Program"]
+        metric1 = BaseMetrics.from_json_object(jsobj)
+        assert metric1 is None
 
 
 class TestEqual():
