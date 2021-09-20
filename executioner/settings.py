@@ -32,9 +32,7 @@ def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:
         return yaml.safe_load
     elif form == 'json':
         return json.loads
-    else:
-        assert False, f"unknown format {form}"
-    return None
+    assert False, f"unknown format {form}"
 
 
 class Settings():
