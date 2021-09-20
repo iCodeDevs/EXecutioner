@@ -3,7 +3,7 @@
           "DTD/xhtml1-strict.dtd">
 <html>
   <head>
-    <title>executioner.settings : API documentation</title>
+    <title>executioner.utils : API documentation</title>
 
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
@@ -28,7 +28,7 @@
     <div class="container">
 
       <div class="page-header">
-        <h1 class="module"><code>executioner.settings</code> <small>module documentation</small></h1>
+        <h1 class="module"><code>executioner.utils</code> <small>module documentation</small></h1>
 
         <span id="partOf">
           Part of <code><a href="executioner.html" class="code" data-type="Package">executioner</a></code>
@@ -42,27 +42,22 @@
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Load and hold the settings for compile,execute and evaluate steps</p></div>
+        <div><p>Utility functions</p></div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id46">
+        <table class="children sortable" id="id56">
   
-  <tr class="variable">
+  <tr class="function">
     
-    <td>Variable</td>
-    <td><a href="executioner.settings.html#SETTINGS_MERGER" class="code" data-type="Variable">SETTINGS_MERGER</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Function</td>
+    <td><a href="executioner.utils.html#get_import_path" class="code" data-type="Function">get_import_path</a></td>
+    <td><span>get the import path of an object's class</span></td>
   </tr><tr class="function">
     
     <td>Function</td>
-    <td><a href="executioner.settings.html#get_loader" class="code" data-type="Function">get_loader</a></td>
-    <td><span>Return load function for required format</span></td>
-  </tr><tr class="class">
-    
-    <td>Class</td>
-    <td><a href="executioner.settings.Settings.html" class="code" data-type="Class">Settings</a></td>
-    <td><span>Represent the settings</span></td>
+    <td><a href="executioner.utils.html#import_class" class="code" data-type="Function">import_class</a></td>
+    <td><span>get the class from given module with given name</span></td>
   </tr>
 </table>
         
@@ -72,40 +67,43 @@
 
       <div id="childList">
 
-        <div class="basevariable">
+        <div class="basefunction">
   
-  <a name="executioner.settings.SETTINGS_MERGER">
+  <a name="executioner.utils.get_import_path">
     
   </a>
-  <a name="SETTINGS_MERGER">
-    
-  </a>
-  <div class="functionHeader">
-    SETTINGS_MERGER =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="basefunction">
-  
-  <a name="executioner.settings.get_loader">
-    
-  </a>
-  <a name="get_loader">
+  <a name="get_import_path">
     
   </a>
   <div class="functionHeader">
     
     def
-    get_loader(form="""yaml"""):
+    get_import_path(obj):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Return load function for required format</p></div>
+    <div><p>get the import path of an object's class</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  <a name="executioner.utils.import_class">
+    
+  </a>
+  <a name="import_class">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    import_class(module, name):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>get the class from given module with given name</p></div>
   </div>
 </div>
 
