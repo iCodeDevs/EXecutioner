@@ -49,3 +49,13 @@ print("hello world"
         jsobj = ev1.to_json_object()
         ev2 = Evaluation.from_json_object(json.loads(json.dumps(jsobj)))
         assert ev1 == ev2
+
+    def test_json_error_conversion(self):
+        '''test json conversion'''
+        pgm1 = Program("print('hello world'", 'python3', FireJail())
+        testcases = [TestCase(), TestCase("h", "h")]
+        ev1 = Evaluation(pgm1, testcases)
+        ev1.evaluate()
+        jsobj = ev1.to_json_object()
+        ev2 = Evaluation.from_json_object(json.loads(json.dumps(jsobj)))
+        assert ev1 == ev2

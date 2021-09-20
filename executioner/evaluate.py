@@ -107,7 +107,7 @@ class TestCase:
             "input": self.input,
             "output": self.output,
             "real_output": self.real_output,
-            "error": f"{self.error.__class__.__name__} : {str(self.error)}",
+            "error": self.error.to_json_object() if self.error else None,
             "time": self.time,
             "scores": self.scores,
         }
@@ -117,13 +117,21 @@ class TestCase:
         '''Generate TestCase object from JSON object'''
         testcase = TestCase(data["input"], data["output"])
         testcase.real_output = data.get("real_output", "")
-        testcase.error = data.get("error")  # add error conversion
+        if data.get("error"):
+            testcase.error = RunTimeError.from_json_object(data.get("error"))
         testcase.time = data.get("time", -1)
         testcase.scores = data.get("scores", dict())
         return testcase
 
     def __eq__(self, o: 'TestCase') -> bool:
-        return (self.input == o.input) and (self.output == o.output)
+        return all(
+            [
+                (self.input == o.input),
+                (self.output == o.output),
+                (self.error == o.error),
+                (self.real_output == o.real_output),
+            ]
+        )
 
     def set_error(self, error):
         '''set error while evaluation'''
