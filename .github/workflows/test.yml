@@ -59,7 +59,7 @@ jobs:
 
       - name: Generate Report
         run: |
-          pytest --cov=executioner -n 4 executioner/
+          coverage run -m pytest
           coverage report --fail-under=99
   Publish:
     runs-on: ubuntu-latest
