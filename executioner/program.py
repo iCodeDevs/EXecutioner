@@ -1,5 +1,5 @@
 '''represent a program'''
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List
 from uuid import uuid4
 from .settings import Settings
 from .sandbox.base_sandbox import SandBox
@@ -43,10 +43,10 @@ class Program:
         }
 
     @staticmethod
-    def from_json_object(data: Dict[str, Any]) -> Union['Program', None]:
+    def from_json_object(data: Dict[str, Any]) -> 'Program':
         '''Generate Program object from JSON object'''
-        if "code" not in data or "language" not in data:
-            return None
+        assert "code" in data and "language" in data, "invalid Program class JSON"
+
         pgm = Program(data["code"], data["language"])
         sandbox_json: List = data.get("sandbox")
         if not sandbox_json:

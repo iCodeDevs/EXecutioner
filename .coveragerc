@@ -4,6 +4,8 @@ branch=True
 omit = 
     venv/**
     **/test/**
+    **/__main__.py
+    **/logging.py
 [report]
 # Regexes for lines to exclude from consideration
 exclude_lines =

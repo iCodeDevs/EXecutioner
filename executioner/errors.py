@@ -1,5 +1,5 @@
 '''Declare errors for different compilation and execution errors'''
-from typing import Dict, Any, Union
+from typing import Dict, Any
 from .utils import get_import_path, import_class
 
 
@@ -14,11 +14,11 @@ class RunTimeError(Exception):
         }
 
     @staticmethod
-    def from_json_object(data: Dict[str, Any]) -> Union['RunTimeError', None]:
+    def from_json_object(data: Dict[str, Any]) -> 'RunTimeError':
         '''Generate TestCase object from JSON object'''
+        assert "class" in data and "text" in data, "invalid RunTimeError JSON"
         cls = import_class(*data['class'])
-        if not issubclass(cls, RunTimeError):
-            return None
+        assert issubclass(cls, RunTimeError), "invalid RunTimeError JSON"
         if not data.get("text"):
             return cls()
         return cls(data.get("text"))

@@ -53,6 +53,8 @@ class Evaluation:
     def from_json_object(data: Dict[str, Any]) -> 'Evaluation':
         '''Generate TestCase object from JSON object'''
         from executioner.program import Program  # pylint: disable=C0415
+        assert all([x in data for x in ["program", "testcases",
+                                        "metrics"]]), "invalid Evaluation JSON"
         return Evaluation(
             Program.from_json_object(data["program"]),
             testcases=[TestCase.from_json_object(
@@ -115,6 +117,7 @@ class TestCase:
     @staticmethod
     def from_json_object(data: Dict[str, Any]) -> 'TestCase':
         '''Generate TestCase object from JSON object'''
+        assert "input" in data and "output" in data, "invalid TestCase JSON"
         testcase = TestCase(data["input"], data["output"])
         testcase.real_output = data.get("real_output", "")
         if data.get("error"):

@@ -1,5 +1,6 @@
 '''Test for Program class'''
 import json
+import pytest
 from executioner.sandbox.firejail import FireJail
 from executioner.program import Program
 from executioner.evaluate import TestCase
@@ -42,5 +43,5 @@ class TestProgram():
     def test_json_conversion_non_program(self):
         '''test json conversion of non program class'''
         jsobj = ["executioner.evaluate", "TestCase"]
-        metric1 = Program.from_json_object(jsobj)
-        assert metric1 is None
+        with pytest.raises(AssertionError):
+            Program.from_json_object(jsobj)

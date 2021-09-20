@@ -1,5 +1,6 @@
 '''Test the errors module'''
 import json
+import pytest
 from executioner.errors import RunTimeError
 
 
@@ -23,5 +24,5 @@ class TestErrors():
     def test_json_coversion_of_non_error(self):
         '''test json conversion of non error objects to RunTimeError'''
         jsobj = {"class": ["executioner.program", "Program"]}
-        err2 = RunTimeError.from_json_object(json.loads(json.dumps(jsobj)))
-        assert err2 is None
+        with pytest.raises(AssertionError):
+            RunTimeError.from_json_object(jsobj)

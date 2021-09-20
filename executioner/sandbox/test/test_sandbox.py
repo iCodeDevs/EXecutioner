@@ -1,6 +1,7 @@
 '''Tests for NoSandBox sandbox'''
 from pathlib import Path
 import json
+import pytest
 from executioner.sandbox.no_sandbox import NoSandBox, SandBox
 from executioner.sandbox.firejail import FireJail
 from executioner.settings import Settings
@@ -40,5 +41,5 @@ class TestSandBox():
     def test_json_conversion_non_sandbox(self):
         '''test json conversion of non sandbox class'''
         jsobj = ["executioner.program", "Program"]
-        metric1 = SandBox.from_json_object(jsobj)
-        assert metric1 is None
+        with pytest.raises(AssertionError):
+            SandBox.from_json_object(jsobj)

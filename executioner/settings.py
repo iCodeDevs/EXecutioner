@@ -24,8 +24,10 @@ SETTINGS_MERGER = Merger(
     ["override"]
 )
 
+# ignoring R1710 because pylint not recognizing assert False as an ending
 
-def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:
+
+def get_loader(form='yaml') -> Callable[[IO[Union[str, bytes]]], Any]:  # pylint: disable=R1710
     '''Return load function for required format'''
 
     if form == 'yaml':

@@ -1,5 +1,5 @@
 '''Base sandbox class'''
-from typing import TYPE_CHECKING, List, Tuple, Union
+from typing import TYPE_CHECKING, List, Tuple
 from executioner.utils import import_class, get_import_path
 #pylint: disable=W0611,R0401
 if TYPE_CHECKING:
@@ -30,13 +30,11 @@ class SandBox:
         return get_import_path(self)
 
     @staticmethod
-    def from_json_object(data: List) -> Union['SandBox', None]:
+    def from_json_object(data: List) -> 'SandBox':
         '''Generate Program object from JSON object'''
         cls = import_class(*data)
-        if not issubclass(cls, SandBox):
-            return None
-        else:
-            return cls()
+        assert issubclass(cls, SandBox), "invalid Sandbox JSON"
+        return cls()
 
     def __eq__(self, o: 'SandBox') -> bool:
         return get_import_path(self) == get_import_path(o)
