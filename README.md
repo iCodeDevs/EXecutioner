@@ -17,13 +17,15 @@ A python library to execute untrusted code and evaluate the output.
   sudo apt install firejail
   ```
 
-- The compilers/interpreters for the language of choice (default support: python3, C)
+## Installation
+
+- Install PyPI package
 
   ```bash
-  sudo apt install gcc
+  pip install pyExecutioner
   ```
 
-## INSTALLATION FOR DEV
+## Installation for development
 
 - Clone the repository.
 
@@ -45,6 +47,30 @@ A python library to execute untrusted code and evaluate the output.
   pip install -r requirements.txt
   ```
 
+- Run Test after installing the default supported language compilers/interpreters.
+
+  ```bash
+  pytest executioner/
+  ```
+
+## Default supported languages
+
+- Python3
+
+  ```bash
+  sudo apt install python3
+  ```
+
+- C - uses GCC compiler
+
+  ```bash
+  sudo apt install gcc
+  ```
+
 ## Documentation
 
 Documentation can be found at <https://iCodeDevs.github.io/EXecutioner/>
+
+## NOTE
+
+- under heavy development, alot of changes might occur over time till we hit v1
