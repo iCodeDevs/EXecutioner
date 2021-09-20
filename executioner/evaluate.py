@@ -30,15 +30,15 @@ class Evaluation:
         '''Evaluate the program against testcases and return testcases with scores'''
         try:
             self.program.compile()
-        except CompilationError:
+        except CompilationError as error:
             for testcase in self.testcases:
-                testcase.set_error(CompilationError())
+                testcase.error = error
             return self.testcases
 
         for testcase in self.testcases:
             self.program.execute(testcase)
             scores = self.get_scores(testcase)
-            testcase.set_scores(scores)
+            testcase.scores = scores
         return self.testcases
 
     def to_json_object(self) -> Dict[str, Any]:
@@ -132,11 +132,3 @@ class TestCase:
                 (self.real_output == o.real_output),
             ]
         )
-
-    def set_error(self, error):
-        '''set error while evaluation'''
-        self.error = error
-
-    def set_scores(self, score_dict):
-        '''set the scores for testcase for each metrics'''
-        self.scores = score_dict
